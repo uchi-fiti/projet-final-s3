@@ -21,37 +21,37 @@
         </div>
         <ul class="nav flex-column mt-2">
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="/dashboard">
                     <i class="bi bi-grid-1x2"></i> Dashboard
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="regions.html">
+            <!-- <li class="nav-item">
+                <a class="nav-link" href="/regions">
                     <i class="bi bi-map"></i> Régions
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="villes.html">
+                <a class="nav-link" href="/villes">
                     <i class="bi bi-building"></i> Villes
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="types.html">
+                <a class="nav-link" href="/types">
                     <i class="bi bi-tags"></i> Types de besoins
                 </a>
-            </li>
+            </li> -->
             <li class="nav-item">
-                <a class="nav-link" href="besoins.html">
+                <a class="nav-link" href="/besoins">
                     <i class="bi bi-clipboard-data"></i> Besoins
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="dons.html">
+                <a class="nav-link" href="/crud/dons">
                     <i class="bi bi-gift"></i> Dons
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="attributions.html">
+                <a class="nav-link active" href="/attributions">
                     <i class="bi bi-arrow-left-right"></i> Attributions
                 </a>
             </li>
@@ -83,7 +83,7 @@
                 <h1>Attributions</h1>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Accueil</a></li>
+                        <li class="breadcrumb-item"><a href="/dashboard">Accueil</a></li>
                         <li class="breadcrumb-item active">Attributions</li>
                     </ol>
                 </nav>
@@ -120,51 +120,23 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Riz (sacs de 50kg)</td>
-                                <td>Antananarivo</td>
-                                <td>Riz (sacs de 50kg)</td>
-                                <td>50</td>
-                                <td>4 000 000 Ar</td>
-                                <td>2026-02-15</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Tôles ondulées</td>
-                                <td>Toamasina</td>
-                                <td>Tôles ondulées</td>
-                                <td>80</td>
-                                <td>3 600 000 Ar</td>
-                                <td>2026-02-15</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Don financier – ONG</td>
-                                <td>Mahajanga</td>
-                                <td>Aide financière d'urgence</td>
-                                <td>—</td>
-                                <td>2 000 000 Ar</td>
-                                <td>2026-02-15</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Riz (sacs de 50kg)</td>
-                                <td>Antsirabe</td>
-                                <td>Clous et bois de construction</td>
-                                <td>50</td>
-                                <td>750 000 Ar</td>
-                                <td>2026-02-15</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>Contribution locale</td>
-                                <td>Toamasina</td>
-                                <td>Tôles ondulées</td>
-                                <td>—</td>
-                                <td>1 200 000 Ar</td>
-                                <td>2026-02-15</td>
-                            </tr>
+                            <?php if (!empty($attributions)): ?>
+                                <?php foreach ($attributions as $i => $attr): ?>
+                                    <tr>
+                                        <td><?= $i + 1 ?></td>
+                                        <td><?= htmlspecialchars($attr['don_description'] ?? '—') ?></td>
+                                        <td><?= htmlspecialchars($attr['ville_nom'] ?? '—') ?></td>
+                                        <td><?= htmlspecialchars($attr['besoin_description'] ?? '—') ?></td>
+                                        <td><?= $attr['quantite_attribuee'] ? htmlspecialchars($attr['quantite_attribuee']) : '—' ?></td>
+                                        <td><?= $attr['montant_attribue'] ? number_format($attr['montant_attribue'], 0, ',', ' ') . ' Ar' : '—' ?></td>
+                                        <td><?= date('Y-m-d', strtotime($attr['date_attribution'])) ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="7" class="text-center text-muted">Aucune attribution trouvée. Lancez une simulation.</td>
+                                </tr>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
@@ -174,7 +146,7 @@
 
         <!-- Footer -->
         <footer class="main-footer text-center">
-            Projet BNGRC – Application de suivi des dons
+             Projet BNGRC - Application de suivi des dons - Créée par ETU004171 - ETU003915 et ETU003968
         </footer>
 
     </div>

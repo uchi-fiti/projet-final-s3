@@ -21,37 +21,37 @@
         </div>
         <ul class="nav flex-column mt-2">
             <li class="nav-item">
-                <a class="nav-link active" href="index.html">
+                <a class="nav-link active" href="/dashboard">
                     <i class="bi bi-grid-1x2"></i> Dashboard
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="regions.html">
+            <!-- <li class="nav-item">
+                <a class="nav-link" href="/regions">
                     <i class="bi bi-map"></i> Régions
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="villes.html">
+                <a class="nav-link" href="/villes">
                     <i class="bi bi-building"></i> Villes
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="types.html">
+                <a class="nav-link" href="/types">
                     <i class="bi bi-tags"></i> Types de besoins
                 </a>
-            </li>
+            </li> -->
             <li class="nav-item">
-                <a class="nav-link" href="besoins.html">
+                <a class="nav-link" href="/besoins">
                     <i class="bi bi-clipboard-data"></i> Besoins
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="dons.html">
+                <a class="nav-link" href="/crud/dons">
                     <i class="bi bi-gift"></i> Dons
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="attributions.html">
+                <a class="nav-link" href="/attributions">
                     <i class="bi bi-arrow-left-right"></i> Attributions
                 </a>
             </li>
@@ -83,11 +83,26 @@
                 <h1>Dashboard</h1>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Accueil</a></li>
+                        <li class="breadcrumb-item"><a href="/dashboard">Accueil</a></li>
                         <li class="breadcrumb-item active">Dashboard</li>
                     </ol>
                 </nav>
             </div>
+
+            <!-- Dispatch Status Message -->
+            <?php if (isset($dispatch_ok)): ?>
+                <?php if ($dispatch_ok): ?>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="bi bi-check-circle me-2"></i>La simulation de dispatch a été effectuée avec succès.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+                    </div>
+                <?php else: ?>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="bi bi-exclamation-triangle me-2"></i>Erreur lors de la simulation : <?= htmlspecialchars($dispatch_error ?? 'Erreur inconnue') ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
 
             <!-- Stat Cards -->
             <div class="row g-3 mb-4">
@@ -99,9 +114,9 @@
                                 <i class="bi bi-clipboard-data"></i>
                             </div>
                             <div>
-                                <div class="stat-value">1 250</div>
+                                <div class="stat-value"><?= number_format($stats['total_besoins'] ?? 0, 0, ',', ' ') ?> Ar</div>
                                 <div class="stat-label">Total besoins</div>
-                            </div>
+                            </div> 
                         </div>
                     </div>
                 </div>
@@ -113,7 +128,7 @@
                                 <i class="bi bi-gift"></i>
                             </div>
                             <div>
-                                <div class="stat-value">843</div>
+                                <div class="stat-value"><?= number_format($stats['total_dons'] ?? 0, 0, ',', ' ') ?> Ar</div>
                                 <div class="stat-label">Total dons</div>
                             </div>
                         </div>
@@ -127,7 +142,7 @@
                                 <i class="bi bi-box-seam"></i>
                             </div>
                             <div>
-                                <div class="stat-value">620</div>
+                                <div class="stat-value"><?= number_format($stats['total_distribue'] ?? 0, 0, ',', ' ') ?> Ar</div>
                                 <div class="stat-label">Total distribué</div>
                             </div>
                         </div>
@@ -141,7 +156,7 @@
                                 <i class="bi bi-pie-chart"></i>
                             </div>
                             <div>
-                                <div class="stat-value">67%</div>
+                                <div class="stat-value"><?= $stats['taux_couverture'] ?? 0 ?>%</div>
                                 <div class="stat-label">Taux de couverture</div>
                             </div>
                         </div>
@@ -206,7 +221,7 @@
 
         <!-- Footer -->
         <footer class="main-footer text-center">
-            Projet BNGRC – Application de suivi des dons
+             Projet BNGRC - Application de suivi des dons - Créée par ETU004171 - ETU003915 et ETU003968
         </footer>
 
     </div>

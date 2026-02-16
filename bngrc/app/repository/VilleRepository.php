@@ -27,6 +27,35 @@ class VilleRepository {
 
         return $villes;
     }
+
+    public function getDashboardStats()
+    {
+        // Total besoins (valeur monétaire)
+        $stmt = $this->pdo->query("SELECT COALESCE(SUM(quantite * prix_unitaire), 0) AS total FROM besoins");
+        $totalBesoins = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+
+        // Total dons (valeur monétaire)
+        $stmt = $this->pdo->query("SELECT COALESCE(SUM(montant_total), 0) AS total FROM dons");
+        $totalDons = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+
+        // Total distribué (valeur monétaire des attributions)
+        $stmt = $this->pdo->query("
+            SELECT COALESCE(SUM(a.quantite_attribuee * b.prix_unitaire), 0) AS total
+            FROM attributions a
+            JOIN besoins b ON a.besoin_id = b.id
+        ");
+        $totalDistribue = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+
+        // Taux de couverture
+        $tauxCouverture = $totalBesoins > 0 ? round(($totalDistribue / $totalBesoins) * 100) : 0;
+
+        return [
+            'total_besoins' => $totalBesoins,
+            'total_dons' => $totalDons,
+            'total_distribue' => $totalDistribue,
+            'taux_couverture' => $tauxCouverture
+        ];
+    }
 }
 
 

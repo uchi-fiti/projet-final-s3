@@ -21,37 +21,37 @@
         </div>
         <ul class="nav flex-column mt-2">
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="/dashboard">
                     <i class="bi bi-grid-1x2"></i> Dashboard
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="regions.html">
+            <!-- <li class="nav-item">
+                <a class="nav-link" href="/regions">
                     <i class="bi bi-map"></i> Régions
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="villes.html">
+                <a class="nav-link" href="/villes">
                     <i class="bi bi-building"></i> Villes
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="types.html">
+                <a class="nav-link" href="/types">
                     <i class="bi bi-tags"></i> Types de besoins
                 </a>
-            </li>
+            </li> -->
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/besoins">
                     <i class="bi bi-clipboard-data"></i> Besoins
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="dons.html">
+                <a class="nav-link active" href="/crud/dons">
                     <i class="bi bi-gift"></i> Dons
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="attributions.html">
+                <a class="nav-link" href="/attributions">
                     <i class="bi bi-arrow-left-right"></i> Attributions
                 </a>
             </li>
@@ -91,7 +91,7 @@
                 <h1>Dons</h1>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Accueil</a></li>
+                        <li class="breadcrumb-item"><a href="/dashboard">Accueil</a></li>
                         <li class="breadcrumb-item active">Dons</li>
                     </ol>
                 </nav>
@@ -164,7 +164,7 @@
 
         <!-- Footer -->
         <footer class="main-footer text-center">
-            Projet BNGRC – Application de suivi des dons
+             Projet BNGRC - Application de suivi des dons - Créée par ETU004171 - ETU003915 et ETU003968
         </footer>
 
     </div>

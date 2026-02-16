@@ -1,0 +1,30 @@
+<?php
+
+namespace app\repository;
+
+use Flight;
+use PDO;
+
+class AttributionRepository {
+
+    public function getAllAttributions() {
+        $db = Flight::db();
+        $stmt = $db->prepare("
+            SELECT 
+                a.id,
+                d.description AS don_description,
+                v.nom AS ville_nom,
+                b.description AS besoin_description,
+                a.quantite_attribuee,
+                (a.quantite_attribuee * b.prix_unitaire) AS montant_attribue,
+                a.date_attribution
+            FROM attributions a
+            JOIN besoins b ON a.besoin_id = b.id
+            JOIN dons d ON a.don_id = d.id
+            JOIN villes v ON b.ville_id = v.id
+            ORDER BY a.date_attribution DESC
+        ");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+}
