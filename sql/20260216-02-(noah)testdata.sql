@@ -1,0 +1,1 @@
+insert into types_besoins (nom) values ("Nourriture"), ("Vetements"), ("Materiaux");
