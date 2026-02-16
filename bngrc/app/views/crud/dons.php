@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BNGRC – Dons</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Sidebar Overlay (Mobile) -->
+    <div class="sidebar-overlay"></div>
+
+    <!-- Sidebar -->
+    <nav id="sidebar">
+        <div class="sidebar-brand">
+            <h5>BNGRC</h5>
+            <small>Suivi des dons</small>
+        </div>
+        <ul class="nav flex-column mt-2">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">
+                    <i class="bi bi-grid-1x2"></i> Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="regions.html">
+                    <i class="bi bi-map"></i> Régions
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="villes.html">
+                    <i class="bi bi-building"></i> Villes
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="types.html">
+                    <i class="bi bi-tags"></i> Types de besoins
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="besoins.html">
+                    <i class="bi bi-clipboard-data"></i> Besoins
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="dons.html">
+                    <i class="bi bi-gift"></i> Dons
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="attributions.html">
+                    <i class="bi bi-arrow-left-right"></i> Attributions
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div id="main-content">
+
+        <!-- Top Navbar -->
+        <nav class="top-navbar d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+                <button class="btn-toggle-sidebar me-3" type="button">
+                    <i class="bi bi-list"></i>
+                </button>
+                <span class="fw-semibold">Dons</span>
+            </div>
+            <div class="d-flex align-items-center">
+                <span class="text-muted me-2" style="font-size:0.82rem;">Administrateur</span>
+                <i class="bi bi-person-circle" style="font-size:1.3rem;"></i>
+            </div>
+        </nav>
+
+        <!-- Content Area -->
+        <div class="content-area">
+
+            <!-- Page Header -->
+            <div class="page-header d-flex flex-wrap align-items-center justify-content-between">
+                <h1>Dons</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Accueil</a></li>
+                        <li class="breadcrumb-item active">Dons</li>
+                    </ol>
+                </nav>
+            </div>
+
+            <!-- Table -->
+            <div class="table-container">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h6 class="table-title mb-0">Liste des dons</h6>
+                    <button class="btn btn-accent btn-sm" data-bs-toggle="modal" data-bs-target="#modalDon">
+                        <i class="bi bi-plus-lg me-1"></i> Ajouter don
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th>Quantité / Montant</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Nature</td>
+                                <td>Riz (sacs de 50kg)</td>
+                                <td>100 sacs</td>
+                                <td>2026-01-15</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-secondary btn-action me-1" data-bs-toggle="modal" data-bs-target="#modalDon">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger btn-action btn-delete">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Argent</td>
+                                <td>Don financier – ONG Internationale</td>
+                                <td>5 000 000 Ar</td>
+                                <td>2026-01-20</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-secondary btn-action me-1" data-bs-toggle="modal" data-bs-target="#modalDon">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger btn-action btn-delete">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Matériaux</td>
+                                <td>Tôles ondulées</td>
+                                <td>200 unités</td>
+                                <td>2026-02-01</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-secondary btn-action me-1" data-bs-toggle="modal" data-bs-target="#modalDon">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger btn-action btn-delete">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Nature</td>
+                                <td>Couvertures</td>
+                                <td>150 unités</td>
+                                <td>2026-02-05</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-secondary btn-action me-1" data-bs-toggle="modal" data-bs-target="#modalDon">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger btn-action btn-delete">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>Argent</td>
+                                <td>Contribution locale</td>
+                                <td>1 200 000 Ar</td>
+                                <td>2026-02-10</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-secondary btn-action me-1" data-bs-toggle="modal" data-bs-target="#modalDon">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger btn-action btn-delete">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="main-footer text-center">
+            Projet BNGRC – Application de suivi des dons
+        </footer>
+
+    </div>
+
+    <!-- Modal: Ajouter / Modifier Don -->
+    <div class="modal fade" id="modalDon" tabindex="-1" aria-labelledby="modalDonLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalDonLabel">Ajouter un don</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
+                <form>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="typeDon" class="form-label">Type</label>
+                            <select class="form-select" id="typeDon" required>
+                                <option value="" selected disabled>Sélectionner un type</option>
+                                <option value="1">Nature</option>
+                                <option value="2">Matériaux</option>
+                                <option value="3">Argent</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="descriptionDon" class="form-label">Description</label>
+                            <input type="text" class="form-control" id="descriptionDon" placeholder="Ex: Riz, Aide financière..." required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="quantiteDon" class="form-label">Quantité / Montant</label>
+                            <input type="text" class="form-control" id="quantiteDon" placeholder="Ex: 100 sacs ou 5 000 000 Ar" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="dateDon" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="dateDon" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-accent btn-sm">Enregistrer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+</html>
