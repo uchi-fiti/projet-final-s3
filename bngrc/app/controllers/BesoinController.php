@@ -18,7 +18,7 @@ class BesoinController {
     public function index() {
         // Récupérer tous les besoins depuis la base de données
         $db = $this->app->db();
-        $besoins = $db->fetchAll("\n SELECT b.*, v.nom as ville_nom \n   FROM besoins b\n    LEFT JOIN villes v ON b.ville_id = v.id\n  ORDER BY b.date_saisie DESC\n        ");
+        $besoins = $db->fetchAll("\n SELECT b.*, v.nom as ville_nom \n   FROM bngrc_besoins b\n    LEFT JOIN bngrc_villes v ON b.ville_id = v.id\n  ORDER BY b.date_saisie DESC\n        ");
         
         $this->app->render('besoins/index', [
             'besoins' => $besoins,
@@ -32,7 +32,7 @@ class BesoinController {
     public function create() {
         // Récupérer la liste des villes pour le select
         $db = $this->app->db();
-        $villes = $db->fetchAll("SELECT * FROM villes ORDER BY nom");
+        $villes = $db->fetchAll("SELECT * FROM bngrc_villes ORDER BY nom");
         
         $this->app->render('besoins/create', [
             'villes' => $villes
@@ -60,7 +60,7 @@ class BesoinController {
         }
 
         // Insertion dans la base de données
-        $sql = "INSERT INTO besoins (ville_id, type_besoin, designation, quantite, prix_unitaire, date_saisie) \n                VALUES (?, ?, ?, ?, ?, NOW())";
+        $sql = "INSERT INTO bngrc_besoins (ville_id, type_besoin, designation, quantite, prix_unitaire, date_saisie) \n                VALUES (?, ?, ?, ?, ?, NOW())";
         
         $db->runQuery($sql, [
             $ville_id,
@@ -80,7 +80,7 @@ class BesoinController {
         $db = $this->app->db();
         
         // Récupérer le besoin à modifier
-        $besoin = $db->fetchRow("SELECT * FROM besoins WHERE id = ?", [$id]);
+        $besoin = $db->fetchRow("SELECT * FROM bngrc_besoins WHERE id = ?", [$id]);
         
         if (!$besoin) {
             $this->app->redirect('/besoins?message=error_not_found');
@@ -88,7 +88,7 @@ class BesoinController {
         }
         
         // Récupérer la liste des villes
-        $villes = $db->fetchAll("SELECT * FROM villes ORDER BY nom");
+        $villes = $db->fetchAll("SELECT * FROM bngrc_villes ORDER BY nom");
         
         $this->app->render('besoins/edit', [
             'besoin' => $besoin,
@@ -117,7 +117,7 @@ class BesoinController {
         }
         
         // Mise à jour
-        $sql = "UPDATE besoins \n                SET ville_id = ?, type_besoin = ?, designation = ?, quantite = ?, prix_unitaire = ?, updated_at = NOW()\n                WHERE id = ?";
+        $sql = "UPDATE bngrc_besoins \n                SET ville_id = ?, type_besoin = ?, designation = ?, quantite = ?, prix_unitaire = ?, updated_at = NOW()\n                WHERE id = ?";
         
         $db->runQuery($sql, [
             $ville_id,
@@ -138,7 +138,7 @@ class BesoinController {
         $db = $this->app->db();
         
         // Vérifier si le besoin existe
-        $besoin = $db->fetchRow("SELECT * FROM besoins WHERE id = ?", [$id]);
+        $besoin = $db->fetchRow("SELECT * FROM bngrc_besoins WHERE id = ?", [$id]);
         
         if (!$besoin) {
             $this->app->redirect('/besoins?message=error_not_found');
@@ -146,7 +146,7 @@ class BesoinController {
         }
         
         // Suppression
-        $db->runQuery("DELETE FROM besoins WHERE id = ?", [$id]);
+        $db->runQuery("DELETE FROM bngrc_besoins WHERE id = ?", [$id]);
         
         $this->app->redirect('/besoins?message=success_deleted');
     }

@@ -39,7 +39,7 @@ class TypeController {
         }
 
         $db = Flight::db();
-        $stmt = $db->prepare("INSERT INTO types_besoins (nom) VALUES (?)");
+        $stmt = $db->prepare("INSERT INTO bngrc_types_besoins (nom) VALUES (?)");
         $stmt->execute([$nom]);
 
         $_SESSION['message'] = 'Type créé avec succès';
@@ -61,7 +61,7 @@ class TypeController {
         }
 
         $db = Flight::db();
-        $stmt = $db->prepare("UPDATE types_besoins SET nom = ? WHERE id = ?");
+        $stmt = $db->prepare("UPDATE bngrc_types_besoins SET nom = ? WHERE id = ?");
         $stmt->execute([$nom, $id]);
 
         $_SESSION['message'] = 'Type modifié avec succès';
@@ -75,7 +75,7 @@ class TypeController {
         }
 
         $db = Flight::db();
-        $stmt = $db->prepare("DELETE FROM types_besoins WHERE id = ?");
+        $stmt = $db->prepare("DELETE FROM bngrc_types_besoins WHERE id = ?");
         $stmt->execute([$id]);
 
         $_SESSION['message'] = 'Type supprimé avec succès';

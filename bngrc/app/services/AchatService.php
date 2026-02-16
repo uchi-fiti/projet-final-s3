@@ -22,9 +22,9 @@ class AchatService
         // 1. Récupérer le besoin
         $stmt = $pdo->prepare("
             SELECT b.*, v.nom AS ville_nom, t.nom AS type_nom
-            FROM besoins b
-            JOIN villes v ON b.ville_id = v.id
-            JOIN types_besoins t ON b.type_id = t.id
+            FROM bngrc_besoins b
+            JOIN bngrc_villes v ON b.ville_id = v.id
+            JOIN bngrc_types_besoins t ON b.type_id = t.id
             WHERE b.id = ?
         ");
         $stmt->execute([$besoin_id]);
@@ -49,7 +49,7 @@ class AchatService
         // 3. Vérifier qu'il n'y a plus de dons directs du même type disponibles
         $stmtDirectDons = $pdo->prepare("
             SELECT COALESCE(SUM(quantite_restante), 0) AS dons_directs_restants
-            FROM dons
+            FROM bngrc_dons
             WHERE type_id = ? AND quantite_restante > 0
         ");
         $stmtDirectDons->execute([$besoin['type_id']]);
@@ -71,8 +71,8 @@ class AchatService
         // 5. Vérifier fonds argent disponibles
         $stmtArgent = $pdo->prepare("
             SELECT COALESCE(SUM(montant_restant), 0) AS fonds_disponibles
-            FROM dons d
-            JOIN types_besoins t ON d.type_id = t.id
+            FROM bngrc_dons d
+            JOIN bngrc_types_besoins t ON d.type_id = t.id
             WHERE t.nom = 'Argent' AND d.montant_restant > 0
         ");
         $stmtArgent->execute();
@@ -132,7 +132,7 @@ class AchatService
 
             // 1. Insérer l'achat
             $stmtInsert = $pdo->prepare("
-                INSERT INTO achats (besoin_id, quantite, montant_unitaire, frais_pourcentage, montant_base, montant_frais, montant_total)
+                INSERT INTO bngrc_achats (besoin_id, quantite, montant_unitaire, frais_pourcentage, montant_base, montant_frais, montant_total)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
             ");
             $stmtInsert->execute([
@@ -148,8 +148,8 @@ class AchatService
             // 2. Déduire des dons en argent (FIFO – les plus anciens d'abord)
             $stmtArgentDons = $pdo->prepare("
                 SELECT d.id, d.montant_restant
-                FROM dons d
-                JOIN types_besoins t ON d.type_id = t.id
+                FROM bngrc_dons d
+                JOIN bngrc_types_besoins t ON d.type_id = t.id
                 WHERE t.nom = 'Argent' AND d.montant_restant > 0
                 ORDER BY d.date_saisie ASC
             ");
@@ -165,7 +165,7 @@ class AchatService
                 $deduction = min($restant, $montantDispo);
 
                 $stmtUpdateDon = $pdo->prepare("
-                    UPDATE dons SET montant_restant = montant_restant - ? WHERE id = ?
+                    UPDATE bngrc_dons SET montant_restant = montant_restant - ? WHERE id = ?
                 ");
                 $stmtUpdateDon->execute([$deduction, $don['id']]);
 
@@ -174,7 +174,7 @@ class AchatService
 
             // 3. Mettre à jour quantite_restante du besoin
             $stmtUpdateBesoin = $pdo->prepare("
-                UPDATE besoins SET quantite_restante = quantite_restante - ? WHERE id = ?
+                UPDATE bngrc_besoins SET quantite_restante = quantite_restante - ? WHERE id = ?
             ");
             $stmtUpdateBesoin->execute([$quantite, $besoin_id]);
 

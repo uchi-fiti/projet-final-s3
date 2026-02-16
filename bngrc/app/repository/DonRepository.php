@@ -14,7 +14,7 @@ class DonRepository {
         $db = Flight::db();
         
         $stmt = $db->prepare("
-            INSERT INTO dons (type_id, description, montant_total, quantite, date_saisie)
+            INSERT INTO bngrc_dons (type_id, description, montant_total, quantite, date_saisie)
             VALUES (?, ?, ?, ?, ?)
         ");
         
@@ -42,8 +42,8 @@ class DonRepository {
         
         $stmt = $db->prepare("
             SELECT d.*, t.nom as type_nom 
-            FROM dons d 
-            LEFT JOIN types_besoins t ON d.type_id = t.id 
+            FROM bngrc_dons d 
+            LEFT JOIN bngrc_types_besoins t ON d.type_id = t.id 
             ORDER BY d.date_saisie DESC
         ");
         
@@ -61,8 +61,8 @@ class DonRepository {
         
         $stmt = $db->prepare("
             SELECT d.*, t.nom as type_nom 
-            FROM dons d 
-            LEFT JOIN types_besoins t ON d.type_id = t.id 
+            FROM bngrc_dons d 
+            LEFT JOIN bngrc_types_besoins t ON d.type_id = t.id 
             WHERE d.id = ?
         ");
         
@@ -80,7 +80,7 @@ class DonRepository {
         $db = Flight::db();
         
         $stmt = $db->prepare("
-            UPDATE dons 
+            UPDATE bngrc_dons 
             SET type_id = ?, description = ?, montant_total = ?, quantite = ?, date_saisie = ?
             WHERE id = ?
         ");
@@ -103,7 +103,7 @@ class DonRepository {
     public function deleteDon($id) {
         $db = Flight::db();
         
-        $stmt = $db->prepare("DELETE FROM dons WHERE id = ?");
+        $stmt = $db->prepare("DELETE FROM bngrc_dons WHERE id = ?");
         return $stmt->execute([$id]);
     }
 }

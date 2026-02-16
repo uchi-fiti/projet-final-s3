@@ -20,9 +20,9 @@ class AchatController
         $stmt = $db->prepare("
             SELECT b.id, b.description, b.prix_unitaire, b.quantite, b.quantite_restante,
                    v.nom AS ville_nom, t.nom AS type_nom
-            FROM besoins b
-            JOIN villes v ON b.ville_id = v.id
-            JOIN types_besoins t ON b.type_id = t.id
+            FROM bngrc_besoins b
+            JOIN bngrc_villes v ON b.ville_id = v.id
+            JOIN bngrc_types_besoins t ON b.type_id = t.id
             WHERE b.quantite_restante > 0
             ORDER BY v.nom, t.nom
         ");
@@ -32,8 +32,8 @@ class AchatController
         // Fonds argent disponibles
         $stmtFonds = $db->prepare("
             SELECT COALESCE(SUM(d.montant_restant), 0) AS fonds
-            FROM dons d
-            JOIN types_besoins t ON d.type_id = t.id
+            FROM bngrc_dons d
+            JOIN bngrc_types_besoins t ON d.type_id = t.id
             WHERE t.nom = 'Argent' AND d.montant_restant > 0
         ");
         $stmtFonds->execute();
@@ -73,8 +73,8 @@ class AchatController
         $db = Flight::db();
         $stmtFonds = $db->prepare("
             SELECT COALESCE(SUM(d.montant_restant), 0) AS fonds
-            FROM dons d
-            JOIN types_besoins t ON d.type_id = t.id
+            FROM bngrc_dons d
+            JOIN bngrc_types_besoins t ON d.type_id = t.id
             WHERE t.nom = 'Argent' AND d.montant_restant > 0
         ");
         $stmtFonds->execute();

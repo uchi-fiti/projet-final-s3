@@ -1,8 +1,8 @@
 
 -- ======================
--- REGIONS
+-- bngrc_regions
 -- ======================
-INSERT INTO regions (nom) VALUES
+INSERT INTO bngrc_regions (nom) VALUES
 ('Analamanga'),
 ('Atsinanana'),
 ('Boeny'),
@@ -13,7 +13,7 @@ INSERT INTO regions (nom) VALUES
 -- ======================
 -- VILLES
 -- ======================
-INSERT INTO villes (nom, region_id) VALUES
+INSERT INTO bngrc_villes (nom, region_id) VALUES
 ('Antananarivo', 1),
 ('Ambohidratrimo', 1),
 ('Toamasina', 2),
@@ -34,18 +34,18 @@ INSERT INTO villes (nom, region_id) VALUES
 -- ======================
 -- BESOINS
 -- ======================
-INSERT INTO besoins (ville_id, type_id, description, prix_unitaire, quantite, quantite_restante) VALUES
+INSERT INTO bngrc_besoins (ville_id, type_id, description, prix_unitaire, quantite, quantite_restante) VALUES
 (1, 1, 'Riz 50kg',            25000.00, 200, 200),
 (1, 2, 'Couvertures',          15000.00, 100, 100),
 (1, 3, 'Tôles ondulées',       45000.00,  50,  50);
 
-INSERT INTO besoins (ville_id, type_id, description, prix_unitaire, quantite, quantite_restante) VALUES
+INSERT INTO bngrc_besoins (ville_id, type_id, description, prix_unitaire, quantite, quantite_restante) VALUES
 (2, 1, 'Riz 50kg',            25000.00,  80,  80),
 (2, 3, 'Bâches plastiques',   12000.00, 120, 120),
 (3, 1, 'Huile alimentaire 5L', 18000.00, 150, 150),
 (3, 2, 'Vêtements enfants',    8000.00, 200, 200),
 (3, 3, 'Planches de bois',    30000.00,  60,  60);
-INSERT INTO besoins (ville_id, type_id, description, prix_unitaire, quantite, quantite_restante) VALUES
+INSERT INTO bngrc_besoins (ville_id, type_id, description, prix_unitaire, quantite, quantite_restante) VALUES
 
 (4, 1, 'Farine de blé 25kg',  20000.00, 100, 100),
 (4, 2, 'Chaussures',          12000.00,  80,  80),
@@ -72,7 +72,7 @@ INSERT INTO besoins (ville_id, type_id, description, prix_unitaire, quantite, qu
 -- ======================
 -- DONS
 -- ======================
-INSERT INTO dons (type_id, description, montant_total, quantite, quantite_restante) VALUES
+INSERT INTO bngrc_dons (type_id, description, montant_total, quantite, quantite_restante) VALUES
 -- Dons de nourriture
 (1, 'Don de riz - Croix Rouge',           5000000.00, 200, 200),
 (1, 'Don de conserves - ONG Care',        1500000.00, 300, 300),
@@ -92,27 +92,4 @@ INSERT INTO dons (type_id, description, montant_total, quantite, quantite_restan
 -- ======================
 -- ATTRIBUTIONS
 -- ======================
-INSERT INTO attributions (besoin_id, don_id, quantite_attribuee, montant_attribue) VALUES
--- Antananarivo : riz couvert, couvertures partielles
-(1, 1, 200, 5000000.00),    -- riz entièrement couvert
-(2, 5,  60,  900000.00),    -- couvertures partielles
 
--- Toamasina : huile partiellement, vêtements enfants couverts
-(6, 4, 100, 1800000.00),    -- huile partielle (sur 150)
-(7, 6, 200, 1600000.00),    -- vêtements enfants entièrement couverts
-
--- Mahajanga : conserves couvertes, ciment couvert
-(11, 2, 300, 1500000.00),   -- conserves couvertes
-(12, 10,  40, 1400000.00),  -- ciment couvert
-
--- Antsirabe : riz partiel
-(13, 3,  80, 2000000.00),   -- riz partiel (sur 120)
-
--- Toliara : tôles partielles
-(21, 8,  50, 2250000.00),   -- tôles partielles (sur 70)
-
--- Brickaville : chaussures couvertes
-(10, 7,  80,  960000.00),   -- chaussures couvertes
-
--- Ambohidratrimo : bâches couvertes
-(5, 9, 120, 1440000.00);    -- bâches couvertes

@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // ---- Auto-calculate Montant Total (Besoins) ----
+    // ---- Auto-calculate Montant Total (bngrc_besoins) ----
     const prixField = document.getElementById('prixUnitaire');
     const qteField = document.getElementById('quantite');
     const montantDisplay = document.getElementById('montantTotal');

@@ -18,10 +18,10 @@ class AttributionRepository {
                 a.quantite_attribuee,
                 (a.quantite_attribuee * b.prix_unitaire) AS montant_attribue,
                 a.date_attribution
-            FROM attributions a
-            JOIN besoins b ON a.besoin_id = b.id
-            JOIN dons d ON a.don_id = d.id
-            JOIN villes v ON b.ville_id = v.id
+            FROM bngrc_attributions a
+            JOIN bngrc_besoins b ON a.besoin_id = b.id
+            JOIN bngrc_dons d ON a.don_id = d.id
+            JOIN bngrc_villes v ON b.ville_id = v.id
             ORDER BY a.date_attribution DESC
         ");
         $stmt->execute();

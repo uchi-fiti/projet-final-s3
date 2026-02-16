@@ -18,7 +18,7 @@ class BesoinCrudController {
         $besoins = $besoinRepo->getAllBesoins();
         $types = $typeRepo->getAllTypes();
 
-        $stmt = $pdo->query("SELECT id, nom FROM villes ORDER BY nom ASC");
+        $stmt = $pdo->query("SELECT id, nom FROM bngrc_villes ORDER BY nom ASC");
         $villes = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
         // Edit mode

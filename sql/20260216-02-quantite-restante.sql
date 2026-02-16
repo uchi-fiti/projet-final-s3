@@ -1,8 +1,8 @@
-ALTER TABLE besoins
+ALTER TABLE bngrc_besoins
 ADD COLUMN quantite_restante INT NOT NULL;
-UPDATE besoins
+UPDATE bngrc_besoins
 SET quantite_restante = quantite;
-ALTER TABLE dons
+ALTER TABLE bngrc_dons
 ADD COLUMN quantite_restante INT NOT NULL;
-UPDATE dons
+UPDATE bngrc_dons
 SET quantite_restante = quantite;

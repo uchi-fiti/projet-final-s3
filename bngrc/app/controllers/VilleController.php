@@ -16,8 +16,8 @@ class VilleController {
         // Get villes with their region name
         $stmt = $pdo->query("
             SELECT v.id, v.nom, v.region_id, r.nom AS region_nom
-            FROM villes v
-            LEFT JOIN regions r ON v.region_id = r.id
+            FROM bngrc_villes v
+                LEFT JOIN bngrc_regions r ON v.region_id = r.id
             ORDER BY v.nom ASC
         ");
         $villes = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -55,7 +55,7 @@ class VilleController {
         }
 
         $db = Flight::db();
-        $stmt = $db->prepare("INSERT INTO villes (nom, region_id) VALUES (?, ?)");
+        $stmt = $db->prepare("INSERT INTO bngrc_villes (nom, region_id) VALUES (?, ?)");
         $stmt->execute([$nom, $region_id]);
 
         $_SESSION['message'] = 'Ville créée avec succès';
@@ -79,7 +79,7 @@ class VilleController {
         }
 
         $db = Flight::db();
-        $stmt = $db->prepare("UPDATE villes SET nom = ?, region_id = ? WHERE id = ?");
+        $stmt = $db->prepare("UPDATE bngrc_villes SET nom = ?, region_id = ? WHERE id = ?");
         $stmt->execute([$nom, $region_id, $id]);
 
         $_SESSION['message'] = 'Ville modifiée avec succès';
@@ -93,7 +93,7 @@ class VilleController {
         }
 
         $db = Flight::db();
-        $stmt = $db->prepare("DELETE FROM villes WHERE id = ?");
+        $stmt = $db->prepare("DELETE FROM bngrc_villes WHERE id = ?");
         $stmt->execute([$id]);
 
         $_SESSION['message'] = 'Ville supprimée avec succès';

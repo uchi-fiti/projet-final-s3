@@ -11,7 +11,7 @@ class TypeRepository {
      */
     public function getAllTypes() {
         $db = Flight::db();
-        $stmt = $db->prepare("SELECT id, nom FROM types_besoins ORDER BY nom");
+        $stmt = $db->prepare("SELECT id, nom FROM bngrc_types_besoins ORDER BY nom");
         $stmt->execute();
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
@@ -23,7 +23,7 @@ class TypeRepository {
      */
     public function getTypeById($id) {
         $db = Flight::db();
-        $stmt = $db->prepare("SELECT id, nom FROM types_besoins WHERE id = ?");
+        $stmt = $db->prepare("SELECT id, nom FROM bngrc_types_besoins WHERE id = ?");
         $stmt->execute([$id]);
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
