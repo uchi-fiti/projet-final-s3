@@ -8,7 +8,7 @@ use flight\Engine;
 use PDO;
 use Exception;
 class DispatchController {
-    public function simulateDispatch() {
+    public static function simulateDispatch() {
         $pdo = Flight::db();
         $repo = new VilleRepository($pdo);
         $villes = $repo->getVilleDetailedInfo();

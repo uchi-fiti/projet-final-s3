@@ -2,7 +2,7 @@
 
 use app\controllers\ApiExampleController;
 use app\controllers\DonController;
-
+use app\controllers\DispatchController;
 use app\middlewares\SecurityHeadersMiddleware;
 use flight\Engine;
 use flight\net\Router;
@@ -36,3 +36,8 @@ $router->post("/dons/create", [DonController::class, 'createDon']);
 $router->get("/dons/@id:[0-9]+", [DonController::class, 'getDon']);
 $router->post("/dons/@id:[0-9]+/update", [DonController::class, 'updateDon']);
 $router->post("/dons/@id:[0-9]+/delete", [DonController::class, 'deleteDon']);
+$router->get("/dispatch/simulate", [DispatchController::class, 'simulateDispatch']);
+
+$router->get('/attributions', function() use ($app) {
+	$app->render('attributions/attributions');
+});

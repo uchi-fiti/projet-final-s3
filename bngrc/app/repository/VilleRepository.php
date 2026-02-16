@@ -2,9 +2,10 @@
 namespace app\repository;
 use flight\Engine;
 use Flight;
-
+use PDO;
 class VilleRepository {
-    public function __construct($pdo) {
+    private $pdo;
+    public function __construct($pdo) { 
         $this->pdo = $pdo;
     }
     public function getVilleDetailedInfo()
