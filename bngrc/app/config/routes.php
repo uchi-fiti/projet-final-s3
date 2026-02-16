@@ -32,3 +32,7 @@ $router->group('', function(Router $router) use ($app) {
 }, [ SecurityHeadersMiddleware::class ]);
 
 $router->get("/crud/dons", [DonController::class, 'showDon']);
+$router->post("/dons/create", [DonController::class, 'createDon']);
+$router->get("/dons/@id:[0-9]+", [DonController::class, 'getDon']);
+$router->post("/dons/@id:[0-9]+/update", [DonController::class, 'updateDon']);
+$router->post("/dons/@id:[0-9]+/delete", [DonController::class, 'deleteDon']);

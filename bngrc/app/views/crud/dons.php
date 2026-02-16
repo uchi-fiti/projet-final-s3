@@ -77,6 +77,14 @@
 
         <!-- Content Area -->
         <div class="content-area">
+            
+            <!-- Success/Error Messages -->
+            <?php if (isset($message)): ?>
+                <div class="alert alert-<?= $messageType === 'success' ? 'success' : 'danger' ?> alert-dismissible fade show" role="alert">
+                    <?= htmlspecialchars($message) ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+                </div>
+            <?php endif; ?>
 
             <!-- Page Header -->
             <div class="page-header d-flex flex-wrap align-items-center justify-content-between">
@@ -110,81 +118,43 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Nature</td>
-                                <td>Riz (sacs de 50kg)</td>
-                                <td>100 sacs</td>
-                                <td>2026-01-15</td>
-                                <td>
-                                    <button class="btn btn-sm btn-outline-secondary btn-action me-1" data-bs-toggle="modal" data-bs-target="#modalDon">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-outline-danger btn-action btn-delete">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Argent</td>
-                                <td>Don financier – ONG Internationale</td>
-                                <td>5 000 000 Ar</td>
-                                <td>2026-01-20</td>
-                                <td>
-                                    <button class="btn btn-sm btn-outline-secondary btn-action me-1" data-bs-toggle="modal" data-bs-target="#modalDon">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-outline-danger btn-action btn-delete">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Matériaux</td>
-                                <td>Tôles ondulées</td>
-                                <td>200 unités</td>
-                                <td>2026-02-01</td>
-                                <td>
-                                    <button class="btn btn-sm btn-outline-secondary btn-action me-1" data-bs-toggle="modal" data-bs-target="#modalDon">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-outline-danger btn-action btn-delete">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Nature</td>
-                                <td>Couvertures</td>
-                                <td>150 unités</td>
-                                <td>2026-02-05</td>
-                                <td>
-                                    <button class="btn btn-sm btn-outline-secondary btn-action me-1" data-bs-toggle="modal" data-bs-target="#modalDon">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-outline-danger btn-action btn-delete">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>Argent</td>
-                                <td>Contribution locale</td>
-                                <td>1 200 000 Ar</td>
-                                <td>2026-02-10</td>
-                                <td>
-                                    <button class="btn btn-sm btn-outline-secondary btn-action me-1" data-bs-toggle="modal" data-bs-target="#modalDon">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-outline-danger btn-action btn-delete">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
+                            <?php if (isset($dons) && is_array($dons) && !empty($dons)): ?>
+                                <?php foreach ($dons as $don): ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($don['id']) ?></td>
+                                        <td><?= htmlspecialchars($don['type_nom'] ?? 'N/A') ?></td>
+                                        <td><?= htmlspecialchars($don['description']) ?></td>
+                                        <td>
+                                            <?php if (!empty($don['montant_total'])): ?>
+                                                <?= number_format($don['montant_total'], 0, ',', ' ') ?> Ar
+                                            <?php endif; ?>
+                                            <?php if (!empty($don['quantite'])): ?>
+                                                <?php if (!empty($don['montant_total'])): ?><br><?php endif; ?>
+                                                <?= htmlspecialchars($don['quantite']) ?> unités
+                                            <?php endif; ?>
+                                        </td>
+                                        <td><?= date('Y-m-d', strtotime($don['date_saisie'])) ?></td>
+                                        <td>
+                                            <a href="/crud/dons?edit=<?= htmlspecialchars($don['id']) ?>" 
+                                               class="btn btn-sm btn-outline-secondary btn-action me-1">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <form method="POST" 
+                                                  action="/dons/<?= htmlspecialchars($don['id']) ?>/delete" 
+                                                  style="display: inline;"
+                                                  onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce don ?');">
+                                                <button type="submit" class="btn btn-sm btn-outline-danger btn-action">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="6" class="text-center">Aucun don trouvé</td>
+                                </tr>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
@@ -204,36 +174,59 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalDonLabel">Ajouter un don</h5>
+                    <h5 class="modal-title" id="modalDonLabel">
+                        <?= isset($editDon) && $editDon ? 'Modifier un don' : 'Ajouter un don' ?>
+                    </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
                 </div>
-                <form>
+                <form id="formDon" method="POST" action="<?= isset($editDon) && $editDon ? '/dons/' . htmlspecialchars($editDon['id']) . '/update' : '/dons/create' ?>">
+                    <input type="hidden" id="donId" name="don_id" value="<?= isset($editDon) && $editDon ? htmlspecialchars($editDon['id']) : '' ?>">
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="typeDon" class="form-label">Type</label>
-                            <select class="form-select" id="typeDon" required>
-                                <option value="" selected disabled>Sélectionner un type</option>
-                                <option value="1">Nature</option>
-                                <option value="2">Matériaux</option>
-                                <option value="3">Argent</option>
+                            <select class="form-select" id="typeDon" name="type_id" required>
+                                <option value="" disabled>Sélectionner un type</option>
+                                <?php if (isset($types) && is_array($types)): ?>
+                                    <?php foreach ($types as $type): ?>
+                                        <option value="<?= htmlspecialchars($type['id']) ?>"
+                                                <?= (isset($editDon) && $editDon && $editDon['type_id'] == $type['id']) ? 'selected' : '' ?>>
+                                            <?= htmlspecialchars($type['nom']) ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="descriptionDon" class="form-label">Description</label>
-                            <input type="text" class="form-control" id="descriptionDon" placeholder="Ex: Riz, Aide financière..." required>
+                            <input type="text" class="form-control" id="descriptionDon" name="description" 
+                                   placeholder="Ex: Riz, Aide financière..." 
+                                   value="<?= isset($editDon) && $editDon ? htmlspecialchars($editDon['description']) : '' ?>"
+                                   required>
                         </div>
                         <div class="mb-3">
-                            <label for="quantiteDon" class="form-label">Quantité / Montant</label>
-                            <input type="text" class="form-control" id="quantiteDon" placeholder="Ex: 100 sacs ou 5 000 000 Ar" required>
+                            <label for="montantTotal" class="form-label">Montant Total (Ar)</label>
+                            <input type="number" class="form-control" id="montantTotal" name="montant_total" 
+                                   placeholder="Ex: 5000000" step="0.01" min="0"
+                                   value="<?= isset($editDon) && $editDon && $editDon['montant_total'] ? htmlspecialchars($editDon['montant_total']) : '' ?>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="quantiteDon" class="form-label">Quantité</label>
+                            <input type="number" class="form-control" id="quantiteDon" name="quantite" 
+                                   placeholder="Ex: 100" min="0"
+                                   value="<?= isset($editDon) && $editDon && $editDon['quantite'] ? htmlspecialchars($editDon['quantite']) : '' ?>">
                         </div>
                         <div class="mb-3">
                             <label for="dateDon" class="form-label">Date</label>
-                            <input type="date" class="form-control" id="dateDon" required>
+                            <input type="date" class="form-control" id="dateDon" name="date_don" 
+                                   value="<?= isset($editDon) && $editDon ? date('Y-m-d', strtotime($editDon['date_saisie'])) : date('Y-m-d') ?>"
+                                   required>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Annuler</button>
-                        <button type="submit" class="btn btn-accent btn-sm">Enregistrer</button>
+                        <button type="submit" class="btn btn-accent btn-sm">
+                            <?= isset($editDon) && $editDon ? 'Modifier' : 'Enregistrer' ?>
+                        </button>
                     </div>
                 </form>
             </div>
@@ -242,5 +235,25 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/js/app.js"></script>
+    <script>
+        // Auto-show modal if we're editing a don
+        <?php if (isset($editDon) && $editDon): ?>
+            document.addEventListener('DOMContentLoaded', function() {
+                const modal = new bootstrap.Modal(document.getElementById('modalDon'));
+                modal.show();
+            });
+        <?php endif; ?>
+        
+        // Auto-dismiss alerts after 5 seconds
+        document.addEventListener('DOMContentLoaded', function() {
+            const alerts = document.querySelectorAll('.alert-dismissible');
+            alerts.forEach(function(alert) {
+                setTimeout(function() {
+                    const bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+                    bsAlert.close();
+                }, 5000);
+            });
+        });
+    </script>
 </body>
 </html>
