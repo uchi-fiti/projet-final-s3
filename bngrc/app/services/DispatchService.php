@@ -27,6 +27,7 @@ class DispatchService
                     AND quantite_restante > 0
                     ORDER BY date_saisie ASC
                 ");
+                
                 $stmtBesoin->execute([
                     'type_id' => $don['type_id']
                 ]);

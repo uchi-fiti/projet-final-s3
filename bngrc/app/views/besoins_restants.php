@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BNGRC – Attributions</title>
+    <title>BNGRC – Besoins restants</title>
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/bootstrap-icons.min.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
@@ -25,21 +25,6 @@
                     <i class="bi bi-grid-1x2"></i> Dashboard
                 </a>
             </li>
-            <!-- <li class="nav-item">
-                <a class="nav-link" href="/regions">
-                    <i class="bi bi-map"></i> Régions
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/villes">
-                    <i class="bi bi-building"></i> Villes
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/types">
-                    <i class="bi bi-tags"></i> Types de besoins
-                </a>
-            </li> -->
             <li class="nav-item">
                 <a class="nav-link" href="/besoins">
                     <i class="bi bi-clipboard-data"></i> Besoins
@@ -51,12 +36,12 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="/attributions">
+                <a class="nav-link" href="/attributions">
                     <i class="bi bi-arrow-left-right"></i> Attributions
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/besoins-restants">
+                <a class="nav-link active" href="/besoins-restants">
                     <i class="bi bi-cart"></i> Achats
                 </a>
             </li>
@@ -72,7 +57,7 @@
                 <button class="btn-toggle-sidebar me-3" type="button">
                     <i class="bi bi-list"></i>
                 </button>
-                <span class="fw-semibold">Attributions / Simulation</span>
+                <span class="fw-semibold">Besoins restants – Achat via dons en argent</span>
             </div>
             <div class="d-flex align-items-center">
                 <span class="text-muted me-2" style="font-size:0.82rem;">Hello</span>
@@ -83,63 +68,84 @@
         <!-- Content Area -->
         <div class="content-area">
 
+            <!-- Flash Messages -->
+            <?php if (isset($message)): ?>
+                <div class="alert alert-<?= $messageType === 'success' ? 'success' : 'danger' ?> alert-dismissible fade show" role="alert">
+                    <?= htmlspecialchars($message) ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+                </div>
+            <?php endif; ?>
+
             <!-- Page Header -->
             <div class="page-header d-flex flex-wrap align-items-center justify-content-between">
-                <h1>Attributions</h1>
+                <h1>Besoins restants</h1>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/dashboard">Accueil</a></li>
-                        <li class="breadcrumb-item active">Attributions</li>
+                        <li class="breadcrumb-item active">Besoins restants</li>
                     </ol>
                 </nav>
             </div>
 
-            <!-- Alert Container -->
-            <div id="alertContainer" class="mb-3"></div>
-
-            <!-- Simulation Button -->
-            <a href="/dispatch/simulate" class="text-decoration-none">
-                <div class="mb-4">
-                    <button class="btn btn-accent" id="btnSimulation">
-                        <i class="bi bi-play-circle me-1"></i> Lancer simulation
-                    </button>
+            <!-- Fonds disponibles -->
+            <div class="row g-3 mb-4">
+                <div class="col-sm-6 col-xl-4">
+                    <div class="card stat-card">
+                        <div class="card-body d-flex align-items-center">
+                            <div class="stat-icon bg-success-subtle me-3">
+                                <i class="bi bi-cash-stack"></i>
+                            </div>
+                            <div>
+                                <div class="stat-value"><?= number_format($fonds_disponibles ?? 0, 0, ',', ' ') ?> Ar</div>
+                                <div class="stat-label">Fonds Argent disponibles</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </a>
+            </div>
 
             <!-- Table -->
-            <div class="table-container" id="simulationResults">
+            <div class="table-container">
                 <div class="d-flex align-items-center justify-content-between mb-3">
-                    <h6 class="table-title mb-0">Résultats des attributions</h6>
+                    <h6 class="table-title mb-0">Besoins non couverts</h6>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-hover mb-0">
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Don</th>
                                 <th>Ville</th>
-                                <th>Besoin</th>
-                                <th>Quantité attribuée</th>
-                                <th>Montant attribué</th>
-                                <th>Date attribution</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th>Prix unitaire</th>
+                                <th>Qté totale</th>
+                                <th>Qté restante</th>
+                                <th>Montant restant</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if (!empty($attributions)): ?>
-                                <?php foreach ($attributions as $i => $attr): ?>
+                            <?php if (!empty($besoins)): ?>
+                                <?php foreach ($besoins as $b): ?>
                                     <tr>
-                                        <td><?= $i + 1 ?></td>
-                                        <td><?= htmlspecialchars($attr['don_description'] ?? '—') ?></td>
-                                        <td><?= htmlspecialchars($attr['ville_nom'] ?? '—') ?></td>
-                                        <td><?= htmlspecialchars($attr['besoin_description'] ?? '—') ?></td>
-                                        <td><?= $attr['quantite_attribuee'] ? htmlspecialchars($attr['quantite_attribuee']) : '—' ?></td>
-                                        <td><?= $attr['montant_attribue'] ? number_format($attr['montant_attribue'], 0, ',', ' ') . ' Ar' : '—' ?></td>
-                                        <td><?= date('Y-m-d', strtotime($attr['date_attribution'])) ?></td>
+                                        <td><?= $b['id'] ?></td>
+                                        <td><?= htmlspecialchars($b['ville_nom']) ?></td>
+                                        <td><?= htmlspecialchars($b['type_nom']) ?></td>
+                                        <td><?= htmlspecialchars($b['description']) ?></td>
+                                        <td><?= number_format($b['prix_unitaire'], 0, ',', ' ') ?> Ar</td>
+                                        <td><?= $b['quantite'] ?></td>
+                                        <td><?= $b['quantite_restante'] ?></td>
+                                        <td><?= number_format($b['quantite_restante'] * $b['prix_unitaire'], 0, ',', ' ') ?> Ar</td>
+                                        <td>
+                                            <a href="/achat/<?= $b['id'] ?>" class="btn btn-sm btn-accent">
+                                                <i class="bi bi-cart-plus me-1"></i>Acheter
+                                            </a>
+                                        </td>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else: ?>
                                 <tr>
-                                    <td colspan="7" class="text-center text-muted">Aucune attribution trouvée. Lancez une simulation.</td>
+                                    <td colspan="9" class="text-center text-muted">Tous les besoins sont couverts !</td>
                                 </tr>
                             <?php endif; ?>
                         </tbody>

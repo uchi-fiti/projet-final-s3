@@ -55,6 +55,11 @@
                     <i class="bi bi-arrow-left-right"></i> Attributions
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/besoins-restants">
+                    <i class="bi bi-cart"></i> Achats
+                </a>
+            </li>
         </ul>
     </nav>
 

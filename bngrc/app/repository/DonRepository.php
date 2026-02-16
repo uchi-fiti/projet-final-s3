@@ -21,7 +21,7 @@ class DonRepository {
         $result = $stmt->execute([
             $data['type_id'],
             $data['description'],
-            $data['montant_total'],
+            $data['montant'],
             $data['quantite'],
             $data['date_saisie']
         ]);
@@ -88,7 +88,7 @@ class DonRepository {
         return $stmt->execute([
             $data['type_id'],
             $data['description'],
-            $data['montant_total'],
+            $data['montant'],
             $data['quantite'],
             $data['date_saisie'],
             $id

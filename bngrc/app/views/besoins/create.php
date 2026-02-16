@@ -135,7 +135,7 @@
                                 <div class="input-group">
                                     <input type="text" 
                                            class="form-control bg-light" 
-                                           id="montant_total" 
+                                           id="montant" 
                                            readonly 
                                            value="0.00">
                                     <span class="input-group-text">Ar</span>
@@ -168,7 +168,7 @@
             const prixUnitaire = parseFloat(document.getElementById('prix_unitaire').value) || 0;
             const montantTotal = quantite * prixUnitaire;
             
-            document.getElementById('montant_total').value = montantTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+            document.getElementById('montant').value = montantTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
         }
 
         // Écouter les changements sur les champs quantité et prix unitaire

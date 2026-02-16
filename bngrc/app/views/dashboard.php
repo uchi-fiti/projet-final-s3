@@ -55,6 +55,11 @@
                     <i class="bi bi-arrow-left-right"></i> Attributions
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/besoins-restants">
+                    <i class="bi bi-cart"></i> Achats
+                </a>
+            </li>
         </ul>
     </nav>
 
@@ -93,7 +98,7 @@
             <?php if (isset($dispatch_ok)): ?>
                 <?php if ($dispatch_ok): ?>
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <i class="bi bi-check-circle me-2"></i>La simulation de dispatch a été effectuée avec succès.
+                        <i class="bi bi-check-circle me-2"></i><?= htmlspecialchars($dispatch_message ?? 'La simulation de dispatch a été effectuée avec succès.') ?>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
                     </div>
                 <?php else: ?>
@@ -162,6 +167,13 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="d-flex flex-wrap gap-2 mb-4">
+                <a href="/besoins-restants" class="btn btn-outline-primary">
+                    <i class="bi bi-cart-plus me-1"></i>Voir les besoins restants / Achats
+                </a>
             </div>
 
             <!-- Table: Liste des villes -->

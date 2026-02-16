@@ -35,7 +35,7 @@ class VilleRepository {
         $totalBesoins = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 
         // Total dons (valeur monétaire)
-        $stmt = $this->pdo->query("SELECT COALESCE(SUM(montant_total), 0) AS total FROM dons");
+        $stmt = $this->pdo->query("SELECT COALESCE(SUM(montant), 0) AS total FROM dons");
         $totalDons = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 
         // Total distribué (valeur monétaire des attributions)

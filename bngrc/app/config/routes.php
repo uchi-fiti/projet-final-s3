@@ -9,6 +9,7 @@ use app\controllers\VilleController;
 use app\controllers\TypeController;
 use app\controllers\BesoinCrudController;
 use app\controllers\AttributionController;
+use app\controllers\AchatController;
 use app\middlewares\SecurityHeadersMiddleware;
 use flight\Engine;
 use flight\net\Router;
@@ -76,3 +77,9 @@ $router->get("/dispatch/simulate", [DispatchController::class, 'simulateDispatch
 
 // Attributions
 $router->get('/attributions', [AttributionController::class, 'index']);
+
+// Achats via dons en argent
+$router->get('/besoins-restants', [AchatController::class, 'besoinsRestants']);
+$router->get('/achat/@id:[0-9]+', [AchatController::class, 'showAchatForm']);
+$router->post('/achat/simulate', [AchatController::class, 'simulate']);
+$router->post('/achat/validate', [AchatController::class, 'validate']);

@@ -55,6 +55,11 @@
                     <i class="bi bi-arrow-left-right"></i> Attributions
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/besoins-restants">
+                    <i class="bi bi-cart"></i> Achats
+                </a>
+            </li>
         </ul>
     </nav>
 
@@ -125,11 +130,11 @@
                                         <td><?= htmlspecialchars($don['type_nom'] ?? 'N/A') ?></td>
                                         <td><?= htmlspecialchars($don['description']) ?></td>
                                         <td>
-                                            <?php if (!empty($don['montant_total'])): ?>
-                                                <?= number_format($don['montant_total'], 0, ',', ' ') ?> Ar
+                                            <?php if (!empty($don['montant'])): ?>
+                                                <?= number_format($don['montant'], 0, ',', ' ') ?> Ar
                                             <?php endif; ?>
                                             <?php if (!empty($don['quantite'])): ?>
-                                                <?php if (!empty($don['montant_total'])): ?><br><?php endif; ?>
+                                                <?php if (!empty($don['montant'])): ?><br><?php endif; ?>
                                                 <?= htmlspecialchars($don['quantite']) ?> unités
                                             <?php endif; ?>
                                         </td>
@@ -205,9 +210,9 @@
                         </div>
                         <div class="mb-3">
                             <label for="montantTotal" class="form-label">Montant Total (Ar)</label>
-                            <input type="number" class="form-control" id="montantTotal" name="montant_total" 
+                            <input type="number" class="form-control" id="montantTotal" name="montant" 
                                    placeholder="Ex: 5000000" step="0.01" min="0"
-                                   value="<?= isset($editDon) && $editDon && $editDon['montant_total'] ? htmlspecialchars($editDon['montant_total']) : '' ?>">
+                                   value="<?= isset($editDon) && $editDon && $editDon['montant'] ? htmlspecialchars($editDon['montant']) : '' ?>">
                         </div>
                         <div class="mb-3">
                             <label for="quantiteDon" class="form-label">Quantité</label>

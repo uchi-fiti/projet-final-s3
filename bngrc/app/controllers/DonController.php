@@ -51,13 +51,13 @@ class DonController {
         $data = [
             'type_id' => $_POST['type_id'] ?? null,
             'description' => $_POST['description'] ?? null,
-            'montant_total' => $_POST['montant_total'] ?? null,
+            'montant' => $_POST['montant'] ?? null,
             'quantite' => $_POST['quantite'] ?? null,
             'date_saisie' => $_POST['date_don'] ?? date('Y-m-d H:i:s')
         ];
         
         // Convert empty strings to null
-        $data['montant_total'] = !empty($data['montant_total']) ? $data['montant_total'] : null;
+        $data['montant'] = !empty($data['montant']) ? $data['montant'] : null;
         $data['quantite'] = !empty($data['quantite']) ? $data['quantite'] : null;
         
         // Validate required fields
@@ -97,13 +97,13 @@ class DonController {
         $data = [
             'type_id' => $_POST['type_id'] ?? null,
             'description' => $_POST['description'] ?? null,
-            'montant_total' => $_POST['montant_total'] ?? null,
+            'montant' => $_POST['montant'] ?? null,
             'quantite' => $_POST['quantite'] ?? null,
             'date_saisie' => $_POST['date_don'] ?? date('Y-m-d H:i:s')
         ];
         
         // Convert empty strings to null
-        $data['montant_total'] = !empty($data['montant_total']) ? $data['montant_total'] : null;
+        $data['montant'] = !empty($data['montant']) ? $data['montant'] : null;
         $data['quantite'] = !empty($data['quantite']) ? $data['quantite'] : null;
         
         // Validate required fields
