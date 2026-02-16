@@ -8,7 +8,7 @@ CREATE TABLE regions (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(100) NOT NULL
 ) ENGINE=InnoDB;
-    
+
 -- ======================
 -- TABLE VILLES
 -- ======================
@@ -72,7 +72,7 @@ CREATE TABLE dons (
 -- ======================
 CREATE TABLE attributions (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    besoin_id INT NOT NULL,
+    besoin_id INT NOT NULL, 
     don_id INT NOT NULL,
     quantite_attribuee INT,
     montant_attribue DECIMAL(12,2),
