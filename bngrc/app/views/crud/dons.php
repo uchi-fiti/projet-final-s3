@@ -6,7 +6,7 @@
     <title>BNGRC – Dons</title>
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/alt.css" rel="stylesheet">
 </head>
 <body>
 
@@ -41,7 +41,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="besoins.html">
+                <a class="nav-link" href="#">
                     <i class="bi bi-clipboard-data"></i> Besoins
                 </a>
             </li>
