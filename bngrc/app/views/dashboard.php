@@ -166,48 +166,37 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Antananarivo</td>
-                                <td>500 000 Ar</td>
-                                <td>500 000 Ar</td>
-                                <td>0 Ar</td>
-                                <td><span class="badge badge-couvert">Couvert</span></td>
-                            </tr>
-                            <tr>
-                                <td>Toamasina</td>
-                                <td>320 000 Ar</td>
-                                <td>180 000 Ar</td>
-                                <td>140 000 Ar</td>
-                                <td><span class="badge badge-partiel">Partiel</span></td>
-                            </tr>
-                            <tr>
-                                <td>Mahajanga</td>
-                                <td>200 000 Ar</td>
-                                <td>200 000 Ar</td>
-                                <td>0 Ar</td>
-                                <td><span class="badge badge-couvert">Couvert</span></td>
-                            </tr>
-                            <tr>
-                                <td>Fianarantsoa</td>
-                                <td>150 000 Ar</td>
-                                <td>0 Ar</td>
-                                <td>150 000 Ar</td>
-                                <td><span class="badge badge-non-couvert">Non couvert</span></td>
-                            </tr>
-                            <tr>
-                                <td>Antsirabe</td>
-                                <td>280 000 Ar</td>
-                                <td>120 000 Ar</td>
-                                <td>160 000 Ar</td>
-                                <td><span class="badge badge-partiel">Partiel</span></td>
-                            </tr>
-                            <tr>
-                                <td>Toliara</td>
-                                <td>100 000 Ar</td>
-                                <td>100 000 Ar</td>
-                                <td>0 Ar</td>
-                                <td><span class="badge badge-couvert">Couvert</span></td>
-                            </tr>
+                            <?php if (!empty($villes)): ?>
+                                <?php foreach ($villes as $ville): ?>
+                                    <?php
+                                        $restant = $ville['besoin_total'] - $ville['total_attribue'];
+                                        if ($ville['besoin_total'] == 0) {
+                                            $badgeClass = 'badge-couvert';
+                                            $statut = 'Aucun besoin';
+                                        } elseif ($restant <= 0) {
+                                            $badgeClass = 'badge-couvert';
+                                            $statut = 'Couvert';
+                                        } elseif ($ville['total_attribue'] > 0) {
+                                            $badgeClass = 'badge-partiel';
+                                            $statut = 'Partiel';
+                                        } else {
+                                            $badgeClass = 'badge-non-couvert';
+                                            $statut = 'Non couvert';
+                                        }
+                                    ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($ville['ville']) ?></td>
+                                        <td><?= number_format($ville['besoin_total'], 0, ',', ' ') ?> Ar</td>
+                                        <td><?= number_format($ville['total_attribue'], 0, ',', ' ') ?> Ar</td>
+                                        <td><?= number_format(max(0, $restant), 0, ',', ' ') ?> Ar</td>
+                                        <td><span class="badge <?= $badgeClass ?>"><?= $statut ?></span></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted">Aucune ville trouvée</td>
+                                </tr>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>

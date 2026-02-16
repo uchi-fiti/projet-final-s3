@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BNGRC – Attributions</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
 </head>
 <body>
 
@@ -93,11 +93,13 @@
             <div id="alertContainer" class="mb-3"></div>
 
             <!-- Simulation Button -->
-            <div class="mb-4">
-                <button class="btn btn-accent" id="btnSimulation">
-                    <i class="bi bi-play-circle me-1"></i> Lancer simulation
-                </button>
-            </div>
+            <a href="/dispatch/simulate" class="text-decoration-none">
+                <div class="mb-4">
+                    <button class="btn btn-accent" id="btnSimulation">
+                        <i class="bi bi-play-circle me-1"></i> Lancer simulation
+                    </button>
+                </div>
+            </a>
 
             <!-- Table -->
             <div class="table-container" id="simulationResults">
@@ -177,7 +179,7 @@
 
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/app.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/app.js"></script>
 </body>
 </html>
