@@ -70,7 +70,7 @@
                 <span class="fw-semibold">Attributions / Simulation</span>
             </div>
             <div class="d-flex align-items-center">
-                <span class="text-muted me-2" style="font-size:0.82rem;">Administrateur</span>
+                <span class="text-muted me-2" style="font-size:0.82rem;">Hello</span>
                 <i class="bi bi-person-circle" style="font-size:1.3rem;"></i>
             </div>
         </nav>

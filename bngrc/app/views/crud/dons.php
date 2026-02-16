@@ -6,7 +6,7 @@
     <title>BNGRC – Dons</title>
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="/css/alt.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
 </head>
 <body>
 
@@ -70,7 +70,7 @@
                 <span class="fw-semibold">Dons</span>
             </div>
             <div class="d-flex align-items-center">
-                <span class="text-muted me-2" style="font-size:0.82rem;">Administrateur</span>
+                <span class="text-muted me-2" style="font-size:0.82rem;">Hello</span>
                 <i class="bi bi-person-circle" style="font-size:1.3rem;"></i>
             </div>
         </nav>

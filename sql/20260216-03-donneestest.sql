@@ -37,7 +37,7 @@ INSERT INTO villes (nom, region_id) VALUES
 INSERT INTO besoins (ville_id, type_id, description, prix_unitaire, quantite, quantite_restante) VALUES
 (1, 1, 'Riz 50kg',            25000.00, 200, 200),
 (1, 2, 'Couvertures',          15000.00, 100, 100),
-(1, 3, 'Tôles ondulées',       45000.00,  50,  50),
+(1, 3, 'Tôles ondulées',       45000.00,  50,  50);
 
 INSERT INTO besoins (ville_id, type_id, description, prix_unitaire, quantite, quantite_restante) VALUES
 (2, 1, 'Riz 50kg',            25000.00,  80,  80),
