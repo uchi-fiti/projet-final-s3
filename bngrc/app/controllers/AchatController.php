@@ -17,15 +17,8 @@ class AchatController
     {
         $db = Flight::db();
 
-        // Filtre par ville (optionnel)
-        $villeId = isset($_GET['ville_id']) && $_GET['ville_id'] !== '' ? (int) $_GET['ville_id'] : null;
-
-        // Liste des villes pour le dropdown
-        $stmtVilles = $db->query("SELECT id, nom FROM bngrc_villes ORDER BY nom");
-        $villes = $stmtVilles->fetchAll(PDO::FETCH_ASSOC);
-
-        // Besoins restants avec filtre optionnel
-        $sql = "
+        // Besoins restants (non-Argent, quantite_restante > 0)
+        $stmt = $db->prepare("
             SELECT b.id, b.description, b.prix_unitaire, b.quantite, b.quantite_restante,
                    v.nom AS ville_nom, t.nom AS type_nom
             FROM bngrc_besoins b
@@ -33,16 +26,9 @@ class AchatController
             JOIN bngrc_types_besoins t ON b.type_id = t.id
             WHERE b.quantite_restante > 0 
             AND b.type_id != 3
-        ";
-        $params = [];
-        if ($villeId !== null) {
-            $sql .= " AND b.ville_id = ?";
-            $params[] = $villeId;
-        }
-        $sql .= " ORDER BY v.nom, t.nom";
-
-        $stmt = $db->prepare($sql);
-        $stmt->execute($params);
+            ORDER BY v.nom, t.nom
+        ");
+        $stmt->execute();
         $besoins = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // Fonds argent disponibles
@@ -64,8 +50,6 @@ class AchatController
         Flight::render('besoins_restants', [
             'besoins'           => $besoins,
             'fonds_disponibles' => $fondsDisponibles,
-            'villes'            => $villes,
-            'ville_id'          => $villeId,
             'message'           => $message,
             'messageType'       => $messageType,
         ]);
@@ -163,5 +147,47 @@ class AchatController
             $_SESSION['achat_message_type'] = 'danger';
             Flight::redirect(BASE_URL."/achat/$besoin_id");
         }
+    }
+
+    /**
+     * Affiche la liste des achats effectués, filtrable par ville.
+     */
+    public static function listeAchats()
+    {
+        $db = Flight::db();
+
+        $villeId = isset($_GET['ville_id']) && $_GET['ville_id'] !== '' ? (int) $_GET['ville_id'] : null;
+
+        // Liste des villes pour le dropdown
+        $stmtVilles = $db->query("SELECT id, nom FROM bngrc_villes ORDER BY nom");
+        $villes = $stmtVilles->fetchAll(PDO::FETCH_ASSOC);
+
+        // Achats avec JOINs
+        $sql = "
+            SELECT a.id, a.quantite, a.montant_unitaire, a.frais_pourcentage,
+                   a.montant_base, a.montant_frais, a.montant_total, a.date_achat,
+                   b.description AS besoin_description,
+                   v.nom AS ville_nom, t.nom AS type_nom
+            FROM bngrc_achats a
+            JOIN bngrc_besoins b ON a.besoin_id = b.id
+            JOIN bngrc_villes v ON b.ville_id = v.id
+            JOIN bngrc_types_besoins t ON b.type_id = t.id
+        ";
+        $params = [];
+        if ($villeId !== null) {
+            $sql .= " WHERE b.ville_id = ?";
+            $params[] = $villeId;
+        }
+        $sql .= " ORDER BY a.date_achat DESC";
+
+        $stmt = $db->prepare($sql);
+        $stmt->execute($params);
+        $achats = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        Flight::render('achats_liste', [
+            'achats'   => $achats,
+            'villes'   => $villes,
+            'ville_id' => $villeId,
+        ]);
     }
 }

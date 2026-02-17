@@ -85,6 +85,7 @@ $router->get('/attributions', [AttributionController::class, 'index']);
 
 // Achats via dons en argent
 $router->get('/besoins-restants', [AchatController::class, 'besoinsRestants']);
+$router->get('/achats', [AchatController::class, 'listeAchats']);
 $router->get('/achat/@id:[0-9]+', [AchatController::class, 'showAchatForm']);
 $router->post('/achat/simulate', [AchatController::class, 'simulate']);
 $router->post('/achat/validate', [AchatController::class, 'validate']);
