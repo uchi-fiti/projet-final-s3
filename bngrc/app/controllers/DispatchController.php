@@ -71,6 +71,28 @@ class DispatchController {
     }
 
     /**
+     * Dispatch by ordre column
+     */
+    public static function dispatchByOrdre() {
+        $pdo = Flight::db();
+
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        try {
+            DispatchService::executeByOrdre($pdo);
+            $_SESSION['dispatch_ok'] = true;
+            $_SESSION['dispatch_mode'] = 'Par ordre';
+        } catch (Exception $e) {
+            $_SESSION['dispatch_ok'] = false;
+            $_SESSION['dispatch_error'] = $e->getMessage();
+        }
+
+        Flight::redirect(BASE_URL.'/attributions');    
+    }
+
+    /**
      * Reset : supprime les attributions et remet les quantités/montants restants à leur valeur initiale.
      */
     public static function resetData() {

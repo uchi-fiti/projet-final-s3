@@ -120,6 +120,12 @@ if (session_status() === PHP_SESSION_NONE) {
                     </button>
                 </a>
 
+                <a href="<?= $baseUrl ?>/dispatch/by-ordre" class="text-decoration-none">
+                    <button class="btn btn-accent" id="btnByOrdre">
+                        <i class="bi bi-sort-down me-1"></i> Dispatch | Par ordre
+                    </button>
+                </a>
+
                 <a href="<?= $baseUrl ?>/dispatch/proportional" class="text-decoration-none">
                     <button class="btn btn-primary" id="btnProportional">
                         <i class="bi bi-pie-chart me-1"></i> Simulation Proportionnelle
