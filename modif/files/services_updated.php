@@ -59,4 +59,3 @@ $app->register('db', $pdoClass, [
 //         'save_path' => PROJECT_ROOT . '/storage/sessions',
 //     ]
 // ]);
-

@@ -3,7 +3,6 @@
 use app\controllers\ApiExampleController;
 use app\controllers\BesoinController;
 use app\controllers\DonController;
-use app\controllers\AttributionController;
 use app\middlewares\SecurityHeadersMiddleware;
 use flight\Engine;
 use flight\net\Router;
@@ -63,10 +62,5 @@ $router->group('', function(Router $router) use ($app) {
 	$router->get('/dons', [ DonController::class, 'index' ]);
 	$router->get('/dons/create', [ DonController::class, 'create' ]);
 	$router->post('/dons/store', [ DonController::class, 'store' ]);
-
-	// Page d'attributions / simulation
-	$router->get('/attributions', [ AttributionController::class, 'index' ]);
-	$router->post('/attributions/simulate', [ AttributionController::class, 'simulate' ]);
-	$router->post('/attributions/validate', [ AttributionController::class, 'validate' ]);
-
+	
 }, [ SecurityHeadersMiddleware::class ]);

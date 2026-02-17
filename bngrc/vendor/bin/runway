@@ -1,4 +1,4 @@
-#!/usr/bin/env php
+mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS bngrc CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS bngrc CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"#!/usr/bin/env php
 <?php
 
 /**
