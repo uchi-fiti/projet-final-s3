@@ -75,6 +75,7 @@ $router->post("/dons/@id:[0-9]+/delete", [DonController::class, 'deleteDon']);
 
 // Dispatch simulation
 $router->get("/dispatch/simulate", [DispatchController::class, 'simulateDispatch']);
+$router->get("/dispatch/smallest-first", [DispatchController::class, 'dispatchSmallestFirst']);
 
 // Attributions
 $router->get('/attributions', [AttributionController::class, 'index']);

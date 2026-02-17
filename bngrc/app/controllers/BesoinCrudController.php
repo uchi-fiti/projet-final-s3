@@ -21,6 +21,9 @@ class BesoinCrudController {
         $stmt = $pdo->query("SELECT id, nom FROM bngrc_villes ORDER BY nom ASC");
         $villes = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
+        // ID du type Argent (pour la vue)
+        $argentTypeId = (int) $pdo->query("SELECT id FROM bngrc_types_besoins WHERE nom = 'Argent'")->fetchColumn();
+
         // Edit mode
         $editBesoin = null;
         if (isset($_GET['edit']) && !empty($_GET['edit'])) {
@@ -39,6 +42,7 @@ class BesoinCrudController {
             'types' => $types,
             'villes' => $villes,
             'editBesoin' => $editBesoin,
+            'argentTypeId' => $argentTypeId,
             'message' => $message,
             'messageType' => $messageType
         ]);
@@ -49,20 +53,48 @@ class BesoinCrudController {
             session_start();
         }
 
-        $data = [
-            'ville_id' => $_POST['ville_id'] ?? null,
-            'type_id' => $_POST['type_id'] ?? null,
-            'description' => $_POST['description'] ?? null,
-            'prix_unitaire' => $_POST['prix_unitaire'] ?? null,
-            'quantite' => $_POST['quantite'] ?? null,
-        ];
+        $typeId     = $_POST['type_id'] ?? null;
+        $villeId    = $_POST['ville_id'] ?? null;
+        $description = $_POST['description'] ?? null;
 
-        if (empty($data['ville_id']) || empty($data['type_id']) || empty($data['description']) ||
-            empty($data['prix_unitaire']) || empty($data['quantite'])) {
-            $_SESSION['message'] = 'Tous les champs sont requis';
-            $_SESSION['message_type'] = 'error';
-            Flight::redirect(BASE_URL.'/besoins');
-            return;
+        // Déterminer si type Argent
+        $pdo = Flight::db();
+        $argentId = (int) $pdo->query("SELECT id FROM bngrc_types_besoins WHERE nom = 'Argent'")->fetchColumn();
+        $isArgent = ((int) $typeId === $argentId);
+
+        if ($isArgent) {
+            $montant = $_POST['montant'] ?? null;
+            if (empty($villeId) || empty($typeId) || empty($description) || empty($montant)) {
+                $_SESSION['message'] = 'Tous les champs sont requis';
+                $_SESSION['message_type'] = 'error';
+                Flight::redirect(BASE_URL.'/besoins');
+                return;
+            }
+            $data = [
+                'ville_id' => $villeId,
+                'type_id' => $typeId,
+                'description' => $description,
+                'montant' => $montant,
+                'is_argent' => true,
+            ];
+        } else {
+            $prixUnitaire = $_POST['prix_unitaire'] ?? null;
+            $quantite     = $_POST['quantite'] ?? null;
+            if (empty($villeId) || empty($typeId) || empty($description) ||
+                empty($prixUnitaire) || empty($quantite)) {
+                $_SESSION['message'] = 'Tous les champs sont requis';
+                $_SESSION['message_type'] = 'error';
+                Flight::redirect(BASE_URL.'/besoins');
+                return;
+            }
+            $data = [
+                'ville_id' => $villeId,
+                'type_id' => $typeId,
+                'description' => $description,
+                'prix_unitaire' => $prixUnitaire,
+                'quantite' => $quantite,
+                'is_argent' => false,
+            ];
         }
 
         $repo = new BesoinRepository();
@@ -78,20 +110,48 @@ class BesoinCrudController {
             session_start();
         }
 
-        $data = [
-            'ville_id' => $_POST['ville_id'] ?? null,
-            'type_id' => $_POST['type_id'] ?? null,
-            'description' => $_POST['description'] ?? null,
-            'prix_unitaire' => $_POST['prix_unitaire'] ?? null,
-            'quantite' => $_POST['quantite'] ?? null,
-        ];
+        $typeId      = $_POST['type_id'] ?? null;
+        $villeId     = $_POST['ville_id'] ?? null;
+        $description = $_POST['description'] ?? null;
 
-        if (empty($data['ville_id']) || empty($data['type_id']) || empty($data['description']) ||
-            empty($data['prix_unitaire']) || empty($data['quantite'])) {
-            $_SESSION['message'] = 'Tous les champs sont requis';
-            $_SESSION['message_type'] = 'error';
-            Flight::redirect(BASE_URL.'/besoins');
-            return;
+        // Déterminer si type Argent
+        $pdo = Flight::db();
+        $argentId = (int) $pdo->query("SELECT id FROM bngrc_types_besoins WHERE nom = 'Argent'")->fetchColumn();
+        $isArgent = ((int) $typeId === $argentId);
+
+        if ($isArgent) {
+            $montant = $_POST['montant'] ?? null;
+            if (empty($villeId) || empty($typeId) || empty($description) || empty($montant)) {
+                $_SESSION['message'] = 'Tous les champs sont requis';
+                $_SESSION['message_type'] = 'error';
+                Flight::redirect(BASE_URL.'/besoins');
+                return;
+            }
+            $data = [
+                'ville_id' => $villeId,
+                'type_id' => $typeId,
+                'description' => $description,
+                'montant' => $montant,
+                'is_argent' => true,
+            ];
+        } else {
+            $prixUnitaire = $_POST['prix_unitaire'] ?? null;
+            $quantite     = $_POST['quantite'] ?? null;
+            if (empty($villeId) || empty($typeId) || empty($description) ||
+                empty($prixUnitaire) || empty($quantite)) {
+                $_SESSION['message'] = 'Tous les champs sont requis';
+                $_SESSION['message_type'] = 'error';
+                Flight::redirect(BASE_URL.'/besoins');
+                return;
+            }
+            $data = [
+                'ville_id' => $villeId,
+                'type_id' => $typeId,
+                'description' => $description,
+                'prix_unitaire' => $prixUnitaire,
+                'quantite' => $quantite,
+                'is_argent' => false,
+            ];
         }
 
         $repo = new BesoinRepository();

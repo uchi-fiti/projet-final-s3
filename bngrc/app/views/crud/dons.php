@@ -125,6 +125,8 @@
                                 <th>Type</th>
                                 <th>Description</th>
                                 <th>Quantité / Montant</th>
+                                <th>Qté restante</th>
+                                <th>Montant restant</th>
                                 <th>Date</th>
                                 <th>Actions</th>
                             </tr>
@@ -145,6 +147,8 @@
                                                 <?= htmlspecialchars($don['quantite']) ?> unités
                                             <?php endif; ?>
                                         </td>
+                                        <td><?= ($don['quantite_restante'] !== null) ? (int)$don['quantite_restante'] : '—' ?></td>
+                                        <td><?= ($don['montant_restant'] !== null) ? number_format((float)$don['montant_restant'], 0, ',', ' ') . ' Ar' : '—' ?></td>
                                         <td><?= date('Y-m-d', strtotime($don['date_saisie'])) ?></td>
                                         <td>
                                             <a href="<?= $baseUrl ?>/crud/dons?edit=<?= htmlspecialchars($don['id']) ?>" 
@@ -164,7 +168,7 @@
                                 <?php endforeach; ?>
                             <?php else: ?>
                                 <tr>
-                                    <td colspan="6" class="text-center">Aucun don trouvé</td>
+                                    <td colspan="8" class="text-center">Aucun don trouvé</td>
                                 </tr>
                             <?php endif; ?>
                         </tbody>

@@ -16,7 +16,7 @@ class AttributionRepository {
                 v.nom AS ville_nom,
                 b.description AS besoin_description,
                 a.quantite_attribuee,
-                (a.quantite_attribuee * b.prix_unitaire) AS montant_attribue,
+                a.montant_attribue,
                 a.date_attribution
             FROM bngrc_attributions a
             JOIN bngrc_besoins b ON a.besoin_id = b.id

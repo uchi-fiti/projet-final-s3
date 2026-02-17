@@ -126,8 +126,8 @@
                                 <th>Type</th>
                                 <th>Description</th>
                                 <th>Prix unitaire</th>
-                                <th>Quantité</th>
-                                <th>Montant total</th>
+                                <th>Qté restante</th>
+                                <th>Montant restant</th>
                                 <th>Statut</th>
                                 <th>Actions</th>
                             </tr>
@@ -136,17 +136,34 @@
                             <?php if (!empty($besoins)): ?>
                                 <?php foreach ($besoins as $i => $besoin): ?>
                                     <?php
-                                        $montant = $besoin['quantite'] * $besoin['prix_unitaire'];
-                                        $attribue = $besoin['total_attribue_qty'] ?? 0;
-                                        if ($attribue >= $besoin['quantite']) {
-                                            $badgeClass = 'badge-couvert';
-                                            $statut = 'Couvert';
-                                        } elseif ($attribue > 0) {
-                                            $badgeClass = 'badge-partiel';
-                                            $statut = 'Partiel';
+                                        $isArgent = (($besoin['type_nom'] ?? '') === 'Argent');
+                                        if ($isArgent) {
+                                            $totalMontant    = (float) ($besoin['montant'] ?? 0);
+                                            $montantRestant  = (float) ($besoin['montant_restant'] ?? 0);
+                                            $attribueMontant = (float) ($besoin['total_attribue_montant'] ?? 0);
+                                            if ($totalMontant > 0 && $montantRestant <= 0) {
+                                                $badgeClass = 'badge-couvert';
+                                                $statut = 'Couvert';
+                                            } elseif ($attribueMontant > 0) {
+                                                $badgeClass = 'badge-partiel';
+                                                $statut = 'Partiel';
+                                            } else {
+                                                $badgeClass = 'badge-non-couvert';
+                                                $statut = 'Non couvert';
+                                            }
                                         } else {
-                                            $badgeClass = 'badge-non-couvert';
-                                            $statut = 'Non couvert';
+                                            $attribue = (int) ($besoin['total_attribue_qty'] ?? 0);
+                                            $qteRestante = (int) ($besoin['quantite_restante'] ?? 0);
+                                            if ($attribue >= (int) ($besoin['quantite'] ?? 0)) {
+                                                $badgeClass = 'badge-couvert';
+                                                $statut = 'Couvert';
+                                            } elseif ($attribue > 0) {
+                                                $badgeClass = 'badge-partiel';
+                                                $statut = 'Partiel';
+                                            } else {
+                                                $badgeClass = 'badge-non-couvert';
+                                                $statut = 'Non couvert';
+                                            }
                                         }
                                     ?>
                                     <tr>
@@ -154,9 +171,9 @@
                                         <td><?= htmlspecialchars($besoin['ville_nom'] ?? '—') ?></td>
                                         <td><?= htmlspecialchars($besoin['type_nom'] ?? '—') ?></td>
                                         <td><?= htmlspecialchars($besoin['description'] ?? '') ?></td>
-                                        <td><?= number_format($besoin['prix_unitaire'], 0, ',', ' ') ?> Ar</td>
-                                        <td><?= htmlspecialchars($besoin['quantite']) ?></td>
-                                        <td><?= number_format($montant, 0, ',', ' ') ?> Ar</td>
+                                        <td><?= $isArgent ? '—' : number_format((float)($besoin['prix_unitaire'] ?? 0), 0, ',', ' ') . ' Ar' ?></td>
+                                        <td><?= $isArgent ? '—' : (int)($besoin['quantite_restante'] ?? 0) ?></td>
+                                        <td><?= $isArgent ? number_format((float)($besoin['montant_restant'] ?? 0), 0, ',', ' ') . ' Ar' : '—' ?></td>
                                         <td><span class="badge <?= $badgeClass ?>"><?= $statut ?></span></td>
                                         <td>
                                             <a href="<?= $baseUrl ?>/besoins?edit=<?= $besoin['id'] ?>" class="btn btn-sm btn-outline-secondary btn-action me-1">
@@ -226,13 +243,19 @@
                                 <label for="descriptionBesoin" class="form-label">Description</label>
                                 <input type="text" class="form-control" id="descriptionBesoin" name="description" placeholder="Ex: Riz, Tôles, etc." required>
                             </div>
-                            <div class="col-md-6">
+                            <!-- Champs non-Argent -->
+                            <div class="col-md-6 field-non-argent">
                                 <label for="prixUnitaire" class="form-label">Prix unitaire (Ar)</label>
-                                <input type="number" class="form-control" id="prixUnitaire" name="prix_unitaire" placeholder="0" min="0" required>
+                                <input type="number" class="form-control" id="prixUnitaire" name="prix_unitaire" placeholder="0" min="0">
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 field-non-argent">
                                 <label for="quantite" class="form-label">Quantité</label>
-                                <input type="number" class="form-control" id="quantite" name="quantite" placeholder="0" min="0" required>
+                                <input type="number" class="form-control" id="quantite" name="quantite" placeholder="0" min="0">
+                            </div>
+                            <!-- Champ Argent -->
+                            <div class="col-md-6 field-argent" style="display:none;">
+                                <label for="montant" class="form-label">Montant (Ar)</label>
+                                <input type="number" class="form-control" id="montant" name="montant" placeholder="0" min="0">
                             </div>
                         </div>
                     </div>
@@ -267,7 +290,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Type</label>
-                                <select class="form-select" name="type_id" required>
+                                <select class="form-select" name="type_id" id="typeBesoinEdit" required>
                                     <?php foreach ($types as $type): ?>
                                         <option value="<?= $type['id'] ?>" <?= $editBesoin['type_id'] == $type['id'] ? 'selected' : '' ?>><?= htmlspecialchars($type['nom']) ?></option>
                                     <?php endforeach; ?>
@@ -277,13 +300,19 @@
                                 <label class="form-label">Description</label>
                                 <input type="text" class="form-control" name="description" value="<?= htmlspecialchars($editBesoin['description'] ?? '') ?>" required>
                             </div>
-                            <div class="col-md-6">
+                            <!-- Champs non-Argent -->
+                            <div class="col-md-6 edit-field-non-argent" <?= ($editBesoin['type_nom'] ?? '') === 'Argent' ? 'style="display:none;"' : '' ?>>
                                 <label class="form-label">Prix unitaire (Ar)</label>
-                                <input type="number" class="form-control" name="prix_unitaire" value="<?= $editBesoin['prix_unitaire'] ?>" min="0" required>
+                                <input type="number" class="form-control" name="prix_unitaire" value="<?= $editBesoin['prix_unitaire'] ?? '' ?>" min="0">
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 edit-field-non-argent" <?= ($editBesoin['type_nom'] ?? '') === 'Argent' ? 'style="display:none;"' : '' ?>>
                                 <label class="form-label">Quantité</label>
-                                <input type="number" class="form-control" name="quantite" value="<?= $editBesoin['quantite'] ?>" min="0" required>
+                                <input type="number" class="form-control" name="quantite" value="<?= $editBesoin['quantite'] ?? '' ?>" min="0">
+                            </div>
+                            <!-- Champ Argent -->
+                            <div class="col-md-6 edit-field-argent" <?= ($editBesoin['type_nom'] ?? '') !== 'Argent' ? 'style="display:none;"' : '' ?>>
+                                <label class="form-label">Montant (Ar)</label>
+                                <input type="number" class="form-control" name="montant" value="<?= $editBesoin['montant'] ?? '' ?>" min="0">
                             </div>
                         </div>
                     </div>
@@ -300,5 +329,44 @@
 
     <script src="<?= $baseUrl ?>/js/bootstrap.bundle.min.js"></script>
     <script src="<?= $baseUrl ?>/js/app.js"></script>
+    <script>
+    (function() {
+        var argentId = '<?= $argentTypeId ?? '' ?>';
+
+        function toggleFields(selectEl, nonArgentSelector, argentSelector) {
+            var isArgent = (selectEl.value === argentId);
+            document.querySelectorAll(nonArgentSelector).forEach(function(el) {
+                el.style.display = isArgent ? 'none' : '';
+                el.querySelectorAll('input').forEach(function(inp) {
+                    inp.required = !isArgent;
+                    if (isArgent) inp.value = '';
+                });
+            });
+            document.querySelectorAll(argentSelector).forEach(function(el) {
+                el.style.display = isArgent ? '' : 'none';
+                el.querySelectorAll('input').forEach(function(inp) {
+                    inp.required = isArgent;
+                    if (!isArgent) inp.value = '';
+                });
+            });
+        }
+
+        // Modal Créer
+        var createSelect = document.getElementById('typeBesoin');
+        if (createSelect) {
+            createSelect.addEventListener('change', function() {
+                toggleFields(this, '.field-non-argent', '.field-argent');
+            });
+        }
+
+        // Modal Modifier
+        var editSelect = document.getElementById('typeBesoinEdit');
+        if (editSelect) {
+            editSelect.addEventListener('change', function() {
+                toggleFields(this, '.edit-field-non-argent', '.edit-field-argent');
+            });
+        }
+    })();
+    </script>
 </body>
 </html>

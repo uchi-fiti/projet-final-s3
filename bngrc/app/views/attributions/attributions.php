@@ -105,15 +105,19 @@ echo $baseUrl; ?>
             <!-- Alert Container -->
             <div id="alertContainer" class="mb-3"></div>
 
-            <!-- Simulation Button -->
-            <a href="<?= $baseUrl ?>/dispatch/simulate" class="text-decoration-none">
-                <div class="mb-4">
+            <!-- Simulation Buttons -->
+            <div class="d-flex flex-wrap gap-2 mb-4">
+                <a href="<?= $baseUrl ?>/dispatch/simulate" class="text-decoration-none">
                     <button class="btn btn-accent" id="btnSimulation">
-                        <i class="bi bi-play-circle me-1"></i> Lancer simulation
+                        <i class="bi bi-play-circle me-1"></i> Dispatch | Premier arrivé, premier servi
                     </button>
-                </div>
-            </a>
-
+                </a>
+                <a href="<?= $baseUrl ?>/dispatch/smallest-first" class="text-decoration-none">
+                    <button class="btn btn-accent" id="btnSmallest">
+                        <i class="bi bi-sort-numeric-down me-1"></i> Dispatch | Plus petite quantité d'abord
+                    </button>
+                </a>
+            </div>
             <!-- Table -->
             <div class="table-container" id="simulationResults">
                 <div class="d-flex align-items-center justify-content-between mb-3">
