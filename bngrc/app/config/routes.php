@@ -23,7 +23,7 @@ use flight\net\Router;
 $router->group('', function(Router $router) use ($app) {
 
 	$router->get('/', function() {
-		Flight::redirect('/dashboard');
+		Flight::redirect(BASE_URL.'/dashboard');
 	});
 
 	$router->get('/hello-world/@name', function($name) {
