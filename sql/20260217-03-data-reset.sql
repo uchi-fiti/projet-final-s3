@@ -24,7 +24,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 -- ======================
 -- Ajouter colonne ordre si elle n'existe pas
 -- ======================
-ALTER TABLE bngrc_besoins ADD COLUMN IF NOT EXISTS ordre INT DEFAULT 0;
+ALTER TABLE bngrc_besoins ADD COLUMN ordre INT DEFAULT 0donne
 
 -- ======================
 -- TYPES DE BESOINS
