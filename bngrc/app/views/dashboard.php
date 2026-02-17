@@ -1,12 +1,14 @@
+<?php $baseUrl = rtrim(BASE_URL, '/'); ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BNGRC – Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="<?= $baseUrl ?>/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?= $baseUrl ?>/css/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="<?= $baseUrl ?>/css/style.css" rel="stylesheet">
 </head>
 <body>
 
@@ -21,38 +23,48 @@
         </div>
         <ul class="nav flex-column mt-2">
             <li class="nav-item">
-                <a class="nav-link active" href="index.html">
+                <a class="nav-link active" href="<?= $baseUrl ?>/dashboard">
                     <i class="bi bi-grid-1x2"></i> Dashboard
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="regions.html">
+            <!-- <li class="nav-item">
+                <a class="nav-link" href="<?= $baseUrl ?>/regions">
                     <i class="bi bi-map"></i> Régions
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="villes.html">
+                <a class="nav-link" href="<?= $baseUrl ?>/villes">
                     <i class="bi bi-building"></i> Villes
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="types.html">
+                <a class="nav-link" href="<?= $baseUrl ?>/types">
                     <i class="bi bi-tags"></i> Types de besoins
                 </a>
-            </li>
+            </li> -->
             <li class="nav-item">
-                <a class="nav-link" href="besoins.html">
+                <a class="nav-link" href="<?= $baseUrl ?>/besoins">
                     <i class="bi bi-clipboard-data"></i> Besoins
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="dons.html">
+                <a class="nav-link" href="<?= $baseUrl ?>/crud/dons">
                     <i class="bi bi-gift"></i> Dons
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="attributions.html">
+                <a class="nav-link" href="<?= $baseUrl ?>/attributions">
                     <i class="bi bi-arrow-left-right"></i> Attributions
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<?= $baseUrl ?>/besoins-restants">
+                    <i class="bi bi-cart"></i> Achats
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<?= $baseUrl ?>/recap">
+                    <i class="bi bi-calculator"></i> Récapitulation
                 </a>
             </li>
         </ul>
@@ -83,11 +95,26 @@
                 <h1>Dashboard</h1>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Accueil</a></li>
+                        <li class="breadcrumb-item"><a href="<?= $baseUrl ?>/dashboard">Accueil</a></li>
                         <li class="breadcrumb-item active">Dashboard</li>
                     </ol>
                 </nav>
             </div>
+
+            <!-- Dispatch Status Message -->
+            <?php if (isset($dispatch_ok)): ?>
+                <?php if ($dispatch_ok): ?>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="bi bi-check-circle me-2"></i><?= htmlspecialchars($dispatch_message ?? 'La simulation de dispatch a été effectuée avec succès.') ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+                    </div>
+                <?php else: ?>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="bi bi-exclamation-triangle me-2"></i>Erreur lors de la simulation : <?= htmlspecialchars($dispatch_error ?? 'Erreur inconnue') ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
 
             <!-- Stat Cards -->
             <div class="row g-3 mb-4">
@@ -99,9 +126,9 @@
                                 <i class="bi bi-clipboard-data"></i>
                             </div>
                             <div>
-                                <div class="stat-value">1 250</div>
+                                <div class="stat-value"><?= number_format($stats['total_besoins'] ?? 0, 0, ',', ' ') ?> Ar</div>
                                 <div class="stat-label">Total besoins</div>
-                            </div>
+                            </div> 
                         </div>
                     </div>
                 </div>
@@ -113,7 +140,7 @@
                                 <i class="bi bi-gift"></i>
                             </div>
                             <div>
-                                <div class="stat-value">843</div>
+                                <div class="stat-value"><?= number_format($stats['total_dons'] ?? 0, 0, ',', ' ') ?> Ar</div>
                                 <div class="stat-label">Total dons</div>
                             </div>
                         </div>
@@ -127,7 +154,7 @@
                                 <i class="bi bi-box-seam"></i>
                             </div>
                             <div>
-                                <div class="stat-value">620</div>
+                                <div class="stat-value"><?= number_format($stats['total_distribue'] ?? 0, 0, ',', ' ') ?> Ar</div>
                                 <div class="stat-label">Total distribué</div>
                             </div>
                         </div>
@@ -141,12 +168,19 @@
                                 <i class="bi bi-pie-chart"></i>
                             </div>
                             <div>
-                                <div class="stat-value">67%</div>
+                                <div class="stat-value"><?= $stats['taux_couverture'] ?? 0 ?>%</div>
                                 <div class="stat-label">Taux de couverture</div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="d-flex flex-wrap gap-2 mb-4">
+                <a href="<?= $baseUrl ?>/besoins-restants" class="btn btn-outline-primary">
+                    <i class="bi bi-cart-plus me-1"></i>Voir les besoins restants / Achats
+                </a>
             </div>
 
             <!-- Table: Liste des villes -->
@@ -166,48 +200,37 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Antananarivo</td>
-                                <td>500 000 Ar</td>
-                                <td>500 000 Ar</td>
-                                <td>0 Ar</td>
-                                <td><span class="badge badge-couvert">Couvert</span></td>
-                            </tr>
-                            <tr>
-                                <td>Toamasina</td>
-                                <td>320 000 Ar</td>
-                                <td>180 000 Ar</td>
-                                <td>140 000 Ar</td>
-                                <td><span class="badge badge-partiel">Partiel</span></td>
-                            </tr>
-                            <tr>
-                                <td>Mahajanga</td>
-                                <td>200 000 Ar</td>
-                                <td>200 000 Ar</td>
-                                <td>0 Ar</td>
-                                <td><span class="badge badge-couvert">Couvert</span></td>
-                            </tr>
-                            <tr>
-                                <td>Fianarantsoa</td>
-                                <td>150 000 Ar</td>
-                                <td>0 Ar</td>
-                                <td>150 000 Ar</td>
-                                <td><span class="badge badge-non-couvert">Non couvert</span></td>
-                            </tr>
-                            <tr>
-                                <td>Antsirabe</td>
-                                <td>280 000 Ar</td>
-                                <td>120 000 Ar</td>
-                                <td>160 000 Ar</td>
-                                <td><span class="badge badge-partiel">Partiel</span></td>
-                            </tr>
-                            <tr>
-                                <td>Toliara</td>
-                                <td>100 000 Ar</td>
-                                <td>100 000 Ar</td>
-                                <td>0 Ar</td>
-                                <td><span class="badge badge-couvert">Couvert</span></td>
-                            </tr>
+                            <?php if (!empty($villes)): ?>
+                                <?php foreach ($villes as $ville): ?>
+                                    <?php
+                                        $restant = $ville['besoin_total'] - $ville['total_attribue'];
+                                        if ($ville['besoin_total'] == 0) {
+                                            $badgeClass = 'badge-couvert';
+                                            $statut = 'Aucun besoin';
+                                        } elseif ($restant <= 0) {
+                                            $badgeClass = 'badge-couvert';
+                                            $statut = 'Couvert';
+                                        } elseif ($ville['total_attribue'] > 0) {
+                                            $badgeClass = 'badge-partiel';
+                                            $statut = 'Partiel';
+                                        } else {
+                                            $badgeClass = 'badge-non-couvert';
+                                            $statut = 'Non couvert';
+                                        }
+                                    ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($ville['ville']) ?></td>
+                                        <td><?= number_format($ville['besoin_total'], 0, ',', ' ') ?> Ar</td>
+                                        <td><?= number_format($ville['total_attribue'], 0, ',', ' ') ?> Ar</td>
+                                        <td><?= number_format(max(0, $restant), 0, ',', ' ') ?> Ar</td>
+                                        <td><span class="badge <?= $badgeClass ?>"><?= $statut ?></span></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted">Aucune ville trouvée</td>
+                                </tr>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
@@ -222,7 +245,7 @@
 
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/app.js"></script>
+    <script src="<?= $baseUrl ?>/js/bootstrap.bundle.min.js"></script>
+    <script src="<?= $baseUrl ?>/js/app.js"></script>
 </body>
 </html>

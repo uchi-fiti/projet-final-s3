@@ -52,6 +52,21 @@ $router = $app->router();
  */
 require('routes.php');
 
+$baseUrl = rtrim((string) $app->get('flight.base_url'), '/');
+if ($baseUrl !== '') {
+	ob_start(static function (string $buffer) use ($baseUrl): string {
+		$updated = preg_replace_callback(
+			'/\b(href|action|src)\s*=\s*(["\'])\/(?!\/)([^"\']*)\2/i',
+			static function (array $matches) use ($baseUrl): string {
+				return $matches[1] . '=' . $matches[2] . $baseUrl . '/' . $matches[3] . $matches[2];
+			},
+			$buffer
+		);
+
+		return $updated ?? $buffer;
+	});
+}
+
 // At this point, your app should have all the instructions it needs and it'll
 // "start" processing everything. This is where the magic happens.
 $app->start();
