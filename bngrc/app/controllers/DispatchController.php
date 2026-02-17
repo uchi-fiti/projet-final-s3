@@ -20,7 +20,7 @@ class DispatchController {
         }
 
         try {
-            DispatchService::execute($pdo);
+            DispatchService::executeFIFO($pdo);
             $_SESSION['dispatch_ok'] = true;
             $_SESSION['dispatch_mode'] = 'FIFO';
         } catch (Exception $e) {

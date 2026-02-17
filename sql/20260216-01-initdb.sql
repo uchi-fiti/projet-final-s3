@@ -1,6 +1,4 @@
-drop database bngrc;
-create database bngrc;
-use bngrc;
+
 -- ======================
 -- TABLE REGIONS
 -- ======================
