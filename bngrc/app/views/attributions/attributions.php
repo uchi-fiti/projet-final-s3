@@ -105,14 +105,18 @@ echo $baseUrl; ?>
             <!-- Alert Container -->
             <div id="alertContainer" class="mb-3"></div>
 
-            <!-- Simulation Button -->
-            <a href="<?= $baseUrl ?>/dispatch/simulate" class="text-decoration-none">
-                <div class="mb-4">
+            <!-- Simulation Button + Revert -->
+            <div class="mb-4 d-flex gap-2 align-items-center">
+                <a href="<?= $baseUrl ?>/dispatch/simulate" class="text-decoration-none">
                     <button class="btn btn-accent" id="btnSimulation">
                         <i class="bi bi-play-circle me-1"></i> Lancer simulation
                     </button>
-                </div>
-            </a>
+                </a>
+
+                <button class="btn btn-outline-danger" id="btnRevert">
+                    <i class="bi bi-arrow-counterclockwise me-1"></i> Initialiser données
+                </button>
+            </div>
 
             <!-- Table -->
             <div class="table-container" id="simulationResults">
@@ -166,5 +170,28 @@ echo $baseUrl; ?>
 
     <script src="<?= $baseUrl ?>/js/bootstrap.bundle.min.js"></script>
     <script src="<?= $baseUrl ?>/js/app.js"></script>
+    <script>
+    document.getElementById('btnRevert').addEventListener('click', function () {
+        if (!confirm('Confirmer : revenir au dernier partage (annuler la dernière simulation) ?')) return;
+        fetch('<?= $baseUrl ?>/attributions/revert-last', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({})
+        })
+        .then(res => res.json())
+        .then(data => {
+            const c = document.getElementById('alertContainer');
+            if (data.ok) {
+                c.innerHTML = '<div class="alert alert-success">Initialisation effectuée — la page va se recharger.</div>';
+                setTimeout(()=> location.reload(), 700);
+            } else {
+                c.innerHTML = '<div class="alert alert-danger">Erreur : ' + (data.message || 'Échec') + '</div>';
+            }
+        })
+        .catch(()=> {
+            document.getElementById('alertContainer').innerHTML = '<div class="alert alert-danger">Erreur réseau.</div>';
+        });
+    });
+    </script>
 </body>
 </html>

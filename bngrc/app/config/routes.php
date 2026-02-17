@@ -78,6 +78,7 @@ $router->get("/dispatch/simulate", [DispatchController::class, 'simulateDispatch
 
 // Attributions
 $router->get('/attributions', [AttributionController::class, 'index']);
+$router->post('/attributions/revert-last', [AttributionController::class, 'revertLast']);
 
 // Achats via dons en argent
 $router->get('/besoins-restants', [AchatController::class, 'besoinsRestants']);

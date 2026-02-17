@@ -8,5 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     '6594cffae477af99d531f0d3d4c9e533' => $vendorDir . '/adhocore/cli/src/functions.php',
     '4cdafd4a5191caf078235e7dd119fdaf' => $vendorDir . '/flightphp/core/flight/autoload.php',
+    '6124b4c8570aa390c21fafd04a26c69f' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
     'd507e002f7fce7f0c6dbf1f22edcb902' => $vendorDir . '/tracy/tracy/src/Tracy/functions.php',
+    'ec07570ca5a812141189b1fa81503674' => $vendorDir . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
 );

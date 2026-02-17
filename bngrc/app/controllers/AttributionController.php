@@ -15,4 +15,15 @@ class AttributionController {
             'attributions' => $attributions
         ]);
     }
-}
+
+    public static function revertLast() {
+        // permission check can be added here (TODO: admin only)
+        $repo = new AttributionRepository();
+        try {
+            $repo->revertLastBatch();
+            Flight::json(['ok' => true, 'message' => 'Revert effectué.']);
+        } catch (\Exception $e) {
+            Flight::json(['ok' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+} 

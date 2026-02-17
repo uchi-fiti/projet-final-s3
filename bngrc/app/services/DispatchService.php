@@ -10,6 +10,9 @@ class DispatchService
         try {
             $pdo->beginTransaction();
 
+            // group this dispatch run with a batch id so it can be reverted later
+            $batchId = bin2hex(random_bytes(8));
+
             $stmtDon = $pdo->prepare("\n                SELECT * FROM bngrc_dons\n                WHERE quantite_restante > 0\n                ORDER BY date_saisie ASC\n            ");
             $stmtDon->execute();
             $dons = $stmtDon->fetchAll(PDO::FETCH_ASSOC);
@@ -36,11 +39,12 @@ class DispatchService
 
                     $quantiteAttribuee = min($donRestant, $besoinRestant);
 
-                    $stmtInsert = $pdo->prepare("\n                        INSERT INTO bngrc_attributions \n                        (besoin_id, don_id, quantite_attribuee, date_attribution)\n                        VALUES (:besoin_id, :don_id, :quantite, NOW())\n                    ");
+                    $stmtInsert = $pdo->prepare("\n                        INSERT INTO bngrc_attributions \n                        (besoin_id, don_id, quantite_attribuee, date_attribution, batch_id)\n                        VALUES (:besoin_id, :don_id, :quantite, NOW(), :batch_id)\n                    ");
                     $stmtInsert->execute([
                         'besoin_id' => $besoin['id'],
                         'don_id' => $don['id'],
-                        'quantite' => $quantiteAttribuee
+                        'quantite' => $quantiteAttribuee,
+                        'batch_id' => $batchId
                     ]);
 
                     $stmtUpdateBesoin = $pdo->prepare("\n                        UPDATE bngrc_besoins\n                        SET quantite_restante = quantite_restante - :quantite\n                        WHERE id = :id\n                    ");

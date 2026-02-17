@@ -77,6 +77,7 @@ CREATE TABLE bngrc_attributions (
     quantite_attribuee INT,
     montant_attribue DECIMAL(12,2),
     date_attribution DATETIME DEFAULT CURRENT_TIMESTAMP,
+    batch_id VARCHAR(64) NULL,
     CONSTRAINT fk_attr_besoin
         FOREIGN KEY (besoin_id)
         REFERENCES bngrc_besoins(id)
