@@ -60,6 +60,7 @@ CREATE TABLE bngrc_besoins (
     quantite_restante INT NULL,
     montant DECIMAL(12,2) NULL,
     montant_restant DECIMAL(12,2) NULL,
+    ordre INT DEFAULT 0,
     date_saisie DATETIME DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_besoin_ville
         FOREIGN KEY (ville_id)

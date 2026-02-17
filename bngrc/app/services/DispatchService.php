@@ -51,9 +51,13 @@ class DispatchService
     {
         $donRestant = (float)$don['montant_restant'];
 
-        $order = ($mode === 'smallest')
-            ? "montant_restant ASC"
-            : "date_saisie ASC";
+        if ($mode === 'smallest') {
+            $order = "montant_restant ASC";
+        } elseif ($mode === 'ordre') {
+            $order = "ordre ASC, date_saisie ASC";
+        } else {
+            $order = "date_saisie ASC";
+        }
 
         $stmtBesoin = $pdo->prepare("
             SELECT * FROM bngrc_besoins
@@ -100,9 +104,13 @@ class DispatchService
     {
         $donRestant = (int)$don['quantite_restante'];
 
-        $order = ($mode === 'smallest')
-            ? "quantite_restante ASC"
-            : "date_saisie ASC";
+        if ($mode === 'smallest') {
+            $order = "quantite_restante ASC";
+        } elseif ($mode === 'ordre') {
+            $order = "ordre ASC, date_saisie ASC";
+        } else {
+            $order = "date_saisie ASC";
+        }
 
         $stmtBesoin = $pdo->prepare("
             SELECT * FROM bngrc_besoins
@@ -177,6 +185,14 @@ class DispatchService
     public static function executeSmallestFirst(PDO $pdo)
     {
         self::dispatch($pdo, 'smallest');
+    }
+
+    /**
+     * Dispatch by ordre column — besoins with smallest ordre value are served first
+     */
+    public static function executeByOrdre(PDO $pdo)
+    {
+        self::dispatch($pdo, 'ordre');
     }
 
     /**

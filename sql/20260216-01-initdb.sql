@@ -38,6 +38,7 @@ CREATE TABLE bngrc_besoins (
     description VARCHAR(150),
     prix_unitaire DECIMAL(10,2) NOT NULL,
     quantite INT NOT NULL,
+    ordre INT DEFAULT 0,
     date_saisie DATETIME DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_besoin_ville
         FOREIGN KEY (ville_id)
