@@ -64,7 +64,7 @@ class DonController {
         if (empty($data['type_id']) || empty($data['description'])) {
             $_SESSION['message'] = 'Type et description sont requis';
             $_SESSION['message_type'] = 'error';
-            Flight::redirect('/crud/dons');
+            Flight::redirect(BASE_URL.'/crud/dons');
             return;
         }
         
@@ -78,7 +78,7 @@ class DonController {
             $_SESSION['message_type'] = 'error';
         }
         
-        Flight::redirect('/crud/dons');
+        Flight::redirect(BASE_URL.'/crud/dons');
     }
     
     public function updateDon($id) {
@@ -89,7 +89,7 @@ class DonController {
         if (!$existingDon) {
             $_SESSION['message'] = 'Don non trouvé';
             $_SESSION['message_type'] = 'error';
-            Flight::redirect('/crud/dons');
+            Flight::redirect(BASE_URL.'/crud/dons');
             return;
         }
         
@@ -110,7 +110,7 @@ class DonController {
         if (empty($data['type_id']) || empty($data['description'])) {
             $_SESSION['message'] = 'Type et description sont requis';
             $_SESSION['message_type'] = 'error';
-            Flight::redirect('/crud/dons?edit=' . $id);
+            Flight::redirect(BASE_URL.'/crud/dons?edit=' . $id);
             return;
         }
         
@@ -124,7 +124,7 @@ class DonController {
             $_SESSION['message_type'] = 'error';
         }
         
-        Flight::redirect('/crud/dons');
+        Flight::redirect(BASE_URL.'/crud/dons');
     }
     
     public function deleteDon($id) {
@@ -135,7 +135,7 @@ class DonController {
         if (!$existingDon) {
             $_SESSION['message'] = 'Don non trouvé';
             $_SESSION['message_type'] = 'error';
-            Flight::redirect('/crud/dons');
+            Flight::redirect(BASE_URL.'/crud/dons');
             return;
         }
         
@@ -150,7 +150,7 @@ class DonController {
             $_SESSION['message_type'] = 'error';
         }
         
-        Flight::redirect('/crud/dons');
+        Flight::redirect(BASE_URL.'/crud/dons');
     }
     
     public function getDon($id) {

@@ -34,7 +34,7 @@ class TypeController {
         if (empty($nom)) {
             $_SESSION['message'] = 'Le nom du type est requis';
             $_SESSION['message_type'] = 'error';
-            Flight::redirect('/types');
+            Flight::redirect(BASE_URL.'/types');
             return;
         }
 
@@ -44,7 +44,7 @@ class TypeController {
 
         $_SESSION['message'] = 'Type créé avec succès';
         $_SESSION['message_type'] = 'success';
-        Flight::redirect('/types');
+        Flight::redirect(BASE_URL.'/types');
     }
 
     public static function update($id) {
@@ -56,7 +56,7 @@ class TypeController {
         if (empty($nom)) {
             $_SESSION['message'] = 'Le nom du type est requis';
             $_SESSION['message_type'] = 'error';
-            Flight::redirect('/types');
+            Flight::redirect(BASE_URL.'/types');
             return;
         }
 
@@ -66,7 +66,7 @@ class TypeController {
 
         $_SESSION['message'] = 'Type modifié avec succès';
         $_SESSION['message_type'] = 'success';
-        Flight::redirect('/types');
+        Flight::redirect(BASE_URL.'/types');
     }
 
     public static function delete($id) {
@@ -80,6 +80,6 @@ class TypeController {
 
         $_SESSION['message'] = 'Type supprimé avec succès';
         $_SESSION['message_type'] = 'success';
-        Flight::redirect('/types');
+        Flight::redirect(BASE_URL.'/types');
     }
 }

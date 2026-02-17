@@ -24,6 +24,6 @@ class DispatchController {
             $_SESSION['dispatch_error'] = $e->getMessage();
         }
 
-        Flight::redirect('/dashboard');
+        Flight::redirect(BASE_URL.'/dashboard');    
     }
 }

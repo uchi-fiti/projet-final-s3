@@ -61,7 +61,7 @@ class BesoinCrudController {
             empty($data['prix_unitaire']) || empty($data['quantite'])) {
             $_SESSION['message'] = 'Tous les champs sont requis';
             $_SESSION['message_type'] = 'error';
-            Flight::redirect('/besoins');
+            Flight::redirect(BASE_URL.'/besoins');
             return;
         }
 
@@ -70,7 +70,7 @@ class BesoinCrudController {
 
         $_SESSION['message'] = 'Besoin créé avec succès';
         $_SESSION['message_type'] = 'success';
-        Flight::redirect('/besoins');
+        Flight::redirect(BASE_URL.'/besoins');
     }
 
     public static function update($id) {
@@ -90,7 +90,7 @@ class BesoinCrudController {
             empty($data['prix_unitaire']) || empty($data['quantite'])) {
             $_SESSION['message'] = 'Tous les champs sont requis';
             $_SESSION['message_type'] = 'error';
-            Flight::redirect('/besoins');
+            Flight::redirect(BASE_URL.'/besoins');
             return;
         }
 
@@ -99,7 +99,7 @@ class BesoinCrudController {
 
         $_SESSION['message'] = 'Besoin modifié avec succès';
         $_SESSION['message_type'] = 'success';
-        Flight::redirect('/besoins');
+        Flight::redirect(BASE_URL.'/besoins');
     }
 
     public static function delete($id) {
@@ -112,6 +112,6 @@ class BesoinCrudController {
 
         $_SESSION['message'] = 'Besoin supprimé avec succès';
         $_SESSION['message_type'] = 'success';
-        Flight::redirect('/besoins');
+        Flight::redirect(BASE_URL.'/besoins');
     }
 }

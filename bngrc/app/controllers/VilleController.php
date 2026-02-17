@@ -50,7 +50,7 @@ class VilleController {
         if (empty($nom) || empty($region_id)) {
             $_SESSION['message'] = 'Nom et région sont requis';
             $_SESSION['message_type'] = 'error';
-            Flight::redirect('/villes');
+            Flight::redirect(BASE_URL.'/villes');
             return;
         }
 
@@ -60,7 +60,7 @@ class VilleController {
 
         $_SESSION['message'] = 'Ville créée avec succès';
         $_SESSION['message_type'] = 'success';
-        Flight::redirect('/villes');
+        Flight::redirect(BASE_URL.'/villes');
     }
 
     public static function update($id) {
@@ -74,7 +74,7 @@ class VilleController {
         if (empty($nom) || empty($region_id)) {
             $_SESSION['message'] = 'Nom et région sont requis';
             $_SESSION['message_type'] = 'error';
-            Flight::redirect('/villes');
+            Flight::redirect(BASE_URL.'/villes');
             return;
         }
 
@@ -84,7 +84,7 @@ class VilleController {
 
         $_SESSION['message'] = 'Ville modifiée avec succès';
         $_SESSION['message_type'] = 'success';
-        Flight::redirect('/villes');
+        Flight::redirect(BASE_URL.'/villes');
     }
 
     public static function delete($id) {
@@ -98,6 +98,6 @@ class VilleController {
 
         $_SESSION['message'] = 'Ville supprimée avec succès';
         $_SESSION['message_type'] = 'success';
-        Flight::redirect('/villes');
+        Flight::redirect(BASE_URL.'/villes');
     }
 }

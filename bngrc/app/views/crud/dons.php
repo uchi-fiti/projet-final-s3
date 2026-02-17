@@ -186,7 +186,7 @@
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
                 </div>
-                <form id="formDon" method="POST" action="<?= isset($editDon) && $editDon ? '/dons/' . htmlspecialchars($editDon['id']) . '/update' : '/dons/create' ?>">
+                <form id="formDon" method="POST" action="<?= BASE_URL . isset($editDon) && $editDon ? '/dons/' . htmlspecialchars($editDon['id']) . '/update' : '/dons/create' ?>">
                     <input type="hidden" id="donId" name="don_id" value="<?= isset($editDon) && $editDon ? htmlspecialchars($editDon['id']) : '' ?>">
                     <div class="modal-body">
                         <div class="mb-3">

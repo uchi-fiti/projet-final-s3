@@ -34,7 +34,7 @@ class RegionController {
         if (empty($nom)) {
             $_SESSION['message'] = 'Le nom de la région est requis';
             $_SESSION['message_type'] = 'error';
-            Flight::redirect('/regions');
+            Flight::redirect(BASE_URL.'/regions');
             return;
         }
 
@@ -42,7 +42,7 @@ class RegionController {
         $repo->createRegion($nom);
         $_SESSION['message'] = 'Région créée avec succès';
         $_SESSION['message_type'] = 'success';
-        Flight::redirect('/regions');
+        Flight::redirect(BASE_URL.'/regions');
     }
 
     public static function update($id) {
@@ -54,7 +54,7 @@ class RegionController {
         if (empty($nom)) {
             $_SESSION['message'] = 'Le nom de la région est requis';
             $_SESSION['message_type'] = 'error';
-            Flight::redirect('/regions');
+            Flight::redirect(BASE_URL.'/regions');
             return;
         }
 
@@ -62,7 +62,7 @@ class RegionController {
         $repo->updateRegion($id, $nom);
         $_SESSION['message'] = 'Région modifiée avec succès';
         $_SESSION['message_type'] = 'success';
-        Flight::redirect('/regions');
+        Flight::redirect(BASE_URL.'/regions');
     }
 
     public static function delete($id) {
@@ -74,6 +74,6 @@ class RegionController {
         $repo->deleteRegion($id);
         $_SESSION['message'] = 'Région supprimée avec succès';
         $_SESSION['message_type'] = 'success';
-        Flight::redirect('/regions');
+        Flight::redirect(BASE_URL.'/regions');
     }
 }

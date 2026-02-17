@@ -17,16 +17,32 @@ class AchatController
     {
         $db = Flight::db();
 
-        $stmt = $db->prepare("
+        // Filtre par ville (optionnel)
+        $villeId = isset($_GET['ville_id']) && $_GET['ville_id'] !== '' ? (int) $_GET['ville_id'] : null;
+
+        // Liste des villes pour le dropdown
+        $stmtVilles = $db->query("SELECT id, nom FROM bngrc_villes ORDER BY nom");
+        $villes = $stmtVilles->fetchAll(PDO::FETCH_ASSOC);
+
+        // Besoins restants avec filtre optionnel
+        $sql = "
             SELECT b.id, b.description, b.prix_unitaire, b.quantite, b.quantite_restante,
                    v.nom AS ville_nom, t.nom AS type_nom
             FROM bngrc_besoins b
             JOIN bngrc_villes v ON b.ville_id = v.id
             JOIN bngrc_types_besoins t ON b.type_id = t.id
-            WHERE b.quantite_restante > 0
-            ORDER BY v.nom, t.nom
-        ");
-        $stmt->execute();
+            WHERE b.quantite_restante > 0 
+            AND b.type_id != 3
+        ";
+        $params = [];
+        if ($villeId !== null) {
+            $sql .= " AND b.ville_id = ?";
+            $params[] = $villeId;
+        }
+        $sql .= " ORDER BY v.nom, t.nom";
+
+        $stmt = $db->prepare($sql);
+        $stmt->execute($params);
         $besoins = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // Fonds argent disponibles
@@ -48,6 +64,8 @@ class AchatController
         Flight::render('besoins_restants', [
             'besoins'           => $besoins,
             'fonds_disponibles' => $fondsDisponibles,
+            'villes'            => $villes,
+            'ville_id'          => $villeId,
             'message'           => $message,
             'messageType'       => $messageType,
         ]);
@@ -65,7 +83,7 @@ class AchatController
             if (session_status() === PHP_SESSION_NONE) session_start();
             $_SESSION['achat_message']      = 'Besoin introuvable ou déjà entièrement couvert.';
             $_SESSION['achat_message_type']  = 'danger';
-            Flight::redirect('/besoins-restants');
+            Flight::redirect(BASE_URL.'/besoins-restants');
             return;
         }
 
@@ -118,7 +136,7 @@ class AchatController
             if (session_status() === PHP_SESSION_NONE) session_start();
             $_SESSION['achat_message']      = $result['message'];
             $_SESSION['achat_message_type'] = 'danger';
-            Flight::redirect("/achat/$besoin_id");
+            Flight::redirect(BASE_URL."/achat/$besoin_id");
         }
     }
 
@@ -139,11 +157,11 @@ class AchatController
         if ($result['success']) {
             $_SESSION['dispatch_ok'] = true;
             $_SESSION['dispatch_message'] = $result['message'];
-            Flight::redirect('/dashboard');
+            Flight::redirect(BASE_URL.'/dashboard');
         } else {
             $_SESSION['achat_message']      = $result['message'];
             $_SESSION['achat_message_type'] = 'danger';
-            Flight::redirect("/achat/$besoin_id");
+            Flight::redirect(BASE_URL."/achat/$besoin_id");
         }
     }
 }

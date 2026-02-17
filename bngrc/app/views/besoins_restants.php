@@ -106,6 +106,39 @@
                 </div>
             </div>
 
+            <!-- Filtre par ville -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <form method="GET" action="<?= $baseUrl ?>/besoins-restants" class="row g-2 align-items-end">
+                        <div class="col-auto">
+                            <label for="ville_id" class="form-label mb-0 fw-semibold">Filtrer par ville</label>
+                        </div>
+                        <div class="col-sm-4 col-md-3">
+                            <select name="ville_id" id="ville_id" class="form-select form-select-sm">
+                                <option value="">-- Toutes les villes --</option>
+                                <?php foreach ($villes as $v): ?>
+                                    <option value="<?= $v['id'] ?>" <?= (isset($ville_id) && $ville_id == $v['id']) ? 'selected' : '' ?>>
+                                        <?= htmlspecialchars($v['nom']) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-sm btn-accent">
+                                <i class="bi bi-funnel me-1"></i>Valider
+                            </button>
+                        </div>
+                        <?php if (!empty($ville_id)): ?>
+                            <div class="col-auto">
+                                <a href="<?= $baseUrl ?>/besoins-restants" class="btn btn-sm btn-outline-secondary">
+                                    <i class="bi bi-x-circle me-1"></i>Réinitialiser
+                                </a>
+                            </div>
+                        <?php endif; ?>
+                    </form>
+                </div>
+            </div>
+
             <!-- Table -->
             <div class="table-container">
                 <div class="d-flex align-items-center justify-content-between mb-3">

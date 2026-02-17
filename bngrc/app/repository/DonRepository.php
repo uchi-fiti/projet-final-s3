@@ -14,8 +14,8 @@ class DonRepository {
         $db = Flight::db();
         
         $stmt = $db->prepare("
-            INSERT INTO bngrc_dons (type_id, description, montant_total, quantite, date_saisie)
-            VALUES (?, ?, ?, ?, ?)
+            INSERT INTO bngrc_dons (type_id, description, montant, quantite, date_saisie, quantite_restante)
+            VALUES (?, ?, ?, ?, ?, ?)
         ");
         
         $result = $stmt->execute([
@@ -23,7 +23,8 @@ class DonRepository {
             $data['description'],
             $data['montant'],
             $data['quantite'],
-            $data['date_saisie']
+            $data['date_saisie'],
+            $data['quantite']
         ]);
         
         if ($result) {
@@ -81,7 +82,7 @@ class DonRepository {
         
         $stmt = $db->prepare("
             UPDATE bngrc_dons 
-            SET type_id = ?, description = ?, montant_total = ?, quantite = ?, date_saisie = ?
+            SET type_id = ?, description = ?, montant = ?, quantite = ?, date_saisie = ?
             WHERE id = ?
         ");
         
