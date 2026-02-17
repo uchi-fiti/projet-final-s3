@@ -1,5 +1,9 @@
-<?php $baseUrl = BASE_URL;
-echo $baseUrl; ?>
+<?php 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+$baseUrl = BASE_URL;
+?>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -103,16 +107,38 @@ echo $baseUrl; ?>
             </div>
 
             <!-- Alert Container -->
-            <div id="alertContainer" class="mb-3"></div>
+            <div id="alertContainer" class="mb-3">
+                <?php if (isset($_SESSION['dispatch_ok'])): ?>
+                    <?php if ($_SESSION['dispatch_ok']): ?>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="bi bi-check-circle me-2"></i>
+                            Simulation <?= htmlspecialchars($_SESSION['dispatch_mode'] ?? '') ?> exécutée avec succès !
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <?php else: ?>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="bi bi-exclamation-triangle me-2"></i>
+                            Erreur lors de la simulation : <?= htmlspecialchars($_SESSION['dispatch_error'] ?? 'Erreur inconnue') ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <?php endif; ?>
+                    <?php unset($_SESSION['dispatch_ok'], $_SESSION['dispatch_mode'], $_SESSION['dispatch_error']); ?>
+                <?php endif; ?>
+            </div>
 
-            <!-- Simulation Button -->
-            <a href="<?= $baseUrl ?>/dispatch/simulate" class="text-decoration-none">
-                <div class="mb-4">
+            <!-- Simulation Buttons -->
+            <div class="mb-4 d-flex flex-wrap gap-2">
+                <a href="<?= $baseUrl ?>/dispatch/simulate" class="text-decoration-none">
                     <button class="btn btn-accent" id="btnSimulation">
-                        <i class="bi bi-play-circle me-1"></i> Lancer simulation
+                        <i class="bi bi-list-ol me-1"></i> Simulation FIFO
                     </button>
-                </div>
-            </a>
+                </a>
+                <a href="<?= $baseUrl ?>/dispatch/proportional" class="text-decoration-none">
+                    <button class="btn btn-primary" id="btnProportional">
+                        <i class="bi bi-pie-chart me-1"></i> Simulation Proportionnelle
+                    </button>
+                </a>
+            </div>
 
             <!-- Table -->
             <div class="table-container" id="simulationResults">
