@@ -125,9 +125,10 @@
                                 <th>Ville</th>
                                 <th>Type</th>
                                 <th>Description</th>
-                                <th>Prix unitaire</th>
                                 <th>Qté restante</th>
+                                <th>Qté couverte</th>
                                 <th>Montant restant</th>
+                                <th>Montant couvert</th>
                                 <th>Statut</th>
                                 <th>Actions</th>
                             </tr>
@@ -171,9 +172,10 @@
                                         <td><?= htmlspecialchars($besoin['ville_nom'] ?? '—') ?></td>
                                         <td><?= htmlspecialchars($besoin['type_nom'] ?? '—') ?></td>
                                         <td><?= htmlspecialchars($besoin['description'] ?? '') ?></td>
-                                        <td><?= $isArgent ? '—' : number_format((float)($besoin['prix_unitaire'] ?? 0), 0, ',', ' ') . ' Ar' ?></td>
                                         <td><?= $isArgent ? '—' : (int)($besoin['quantite_restante'] ?? 0) ?></td>
+                                        <td><?= $isArgent ? '—' : (int)($besoin['total_attribue_qty'] ?? 0) ?></td>
                                         <td><?= $isArgent ? number_format((float)($besoin['montant_restant'] ?? 0), 0, ',', ' ') . ' Ar' : '—' ?></td>
+                                        <td><?= $isArgent ? number_format((float)($besoin['total_attribue_montant'] ?? 0), 0, ',', ' ') . ' Ar' : '—' ?></td>
                                         <td><span class="badge <?= $badgeClass ?>"><?= $statut ?></span></td>
                                         <td>
                                             <a href="<?= $baseUrl ?>/besoins?edit=<?= $besoin['id'] ?>" class="btn btn-sm btn-outline-secondary btn-action me-1">
@@ -189,7 +191,7 @@
                                 <?php endforeach; ?>
                             <?php else: ?>
                                 <tr>
-                                    <td colspan="9" class="text-center text-muted">Aucun besoin trouvé</td>
+                                    <td colspan="10" class="text-center text-muted">Aucun besoin trouvé</td>
                                 </tr>
                             <?php endif; ?>
                         </tbody>

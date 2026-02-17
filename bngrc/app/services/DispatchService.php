@@ -188,13 +188,17 @@ class DispatchService
         try {
             $pdo->beginTransaction();
 
-            // Load all dons with remaining quantity
+            // Load all dons with remaining quantity/montant
+            $argentType = $pdo->query("SELECT id FROM bngrc_types_besoins WHERE nom = 'Argent'")->fetch(PDO::FETCH_ASSOC);
+            $argentTypeId = $argentType ? (int)$argentType['id'] : -1;
+
             $stmtDon = $pdo->prepare("
                 SELECT * FROM bngrc_dons
-                WHERE quantite_restante > 0
+                WHERE (type_id = :argent AND montant_restant > 0)
+                   OR (type_id != :argent2 AND quantite_restante > 0)
                 ORDER BY date_saisie ASC
             ");
-            $stmtDon->execute();
+            $stmtDon->execute(['argent' => $argentTypeId, 'argent2' => $argentTypeId]);
             $dons = $stmtDon->fetchAll(PDO::FETCH_ASSOC);
 
             foreach ($dons as $don) {

@@ -78,6 +78,7 @@ $router->get("/dispatch/simulate", [DispatchController::class, 'simulateDispatch
 $router->get("/dispatch/smallest-first", [DispatchController::class, 'dispatchSmallestFirst']);
 
 $router->get("/dispatch/proportional", [DispatchController::class, 'simulateProportional']);
+$router->get("/dispatch/reset", [DispatchController::class, 'resetData']);
 
 // Attributions
 $router->get('/attributions', [AttributionController::class, 'index']);

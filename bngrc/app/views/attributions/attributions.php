@@ -125,6 +125,12 @@ if (session_status() === PHP_SESSION_NONE) {
                         <i class="bi bi-pie-chart me-1"></i> Simulation Proportionnelle
                     </button>
                 </a>
+
+                <a href="<?= $baseUrl ?>/dispatch/reset" class="text-decoration-none" onclick="return confirm('Êtes-vous sûr ? Cela supprimera toutes les attributions et réinitialisera les données.');">
+                    <button class="btn btn-outline-danger" id="btnReset">
+                        <i class="bi bi-arrow-counterclockwise me-1"></i> Reset données
+                    </button>
+                </a>
             </div>
             <!-- Table -->
             <div class="table-container" id="simulationResults">
