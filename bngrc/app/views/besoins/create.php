@@ -1,17 +1,19 @@
+<?php $baseUrl = rtrim(BASE_URL, '/'); ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nouveau Besoin - BNGRC</title>
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/bootstrap-icons.css" rel="stylesheet">
+    <link href="<?= $baseUrl ?>/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?= $baseUrl ?>/css/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand" href="<?= $baseUrl ?>/">
                 <i class="bi bi-house-heart"></i> BNGRC - Gestion des Dons
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -20,16 +22,16 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Tableau de bord</a>
+                        <a class="nav-link" href="<?= $baseUrl ?>/">Tableau de bord</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="/besoins">Besoins</a>
+                        <a class="nav-link active" href="<?= $baseUrl ?>/besoins">Besoins</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/dons">Dons</a>
+                        <a class="nav-link" href="<?= $baseUrl ?>/dons">Dons</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/villes">Villes</a>
+                        <a class="nav-link" href="<?= $baseUrl ?>/villes">Villes</a>
                     </li>
                 </ul>
             </div>
@@ -46,7 +48,7 @@
                         </h4>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="/besoins/store" id="besoinForm">
+                        <form method="POST" action="<?= $baseUrl ?>/besoins/store" id="besoinForm">
                             <!-- Ville -->
                             <div class="mb-3">
                                 <label for="ville_id" class="form-label">
@@ -146,7 +148,7 @@
 
                             <!-- Boutons d'action -->
                             <div class="d-flex justify-content-between">
-                                <a href="/besoins" class="btn btn-secondary">
+                                <a href="<?= $baseUrl ?>/besoins" class="btn btn-secondary">
                                     <i class="bi bi-arrow-left"></i> Retour
                                 </a>
                                 <button type="submit" class="btn btn-primary">
@@ -160,7 +162,7 @@
         </div>
     </div>
 
-    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="<?= $baseUrl ?>/js/bootstrap.bundle.min.js"></script>
     <script>
         // Calcul automatique du montant total
         function calculerMontantTotal() {

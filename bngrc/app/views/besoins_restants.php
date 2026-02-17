@@ -1,12 +1,14 @@
+<?php $baseUrl = rtrim(BASE_URL, '/'); ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BNGRC – Besoins restants</title>
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="/css/style.css" rel="stylesheet">
+    <link href="<?= $baseUrl ?>/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?= $baseUrl ?>/css/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="<?= $baseUrl ?>/css/style.css" rel="stylesheet">
 </head>
 <body>
 
@@ -21,27 +23,27 @@
         </div>
         <ul class="nav flex-column mt-2">
             <li class="nav-item">
-                <a class="nav-link" href="/dashboard">
+                <a class="nav-link" href="<?= $baseUrl ?>/dashboard">
                     <i class="bi bi-grid-1x2"></i> Dashboard
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/besoins">
+                <a class="nav-link" href="<?= $baseUrl ?>/besoins">
                     <i class="bi bi-clipboard-data"></i> Besoins
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/crud/dons">
+                <a class="nav-link" href="<?= $baseUrl ?>/crud/dons">
                     <i class="bi bi-gift"></i> Dons
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/attributions">
+                <a class="nav-link" href="<?= $baseUrl ?>/attributions">
                     <i class="bi bi-arrow-left-right"></i> Attributions
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="/besoins-restants">
+                <a class="nav-link active" href="<?= $baseUrl ?>/besoins-restants">
                     <i class="bi bi-cart"></i> Achats
                 </a>
             </li>
@@ -81,7 +83,7 @@
                 <h1>Besoins restants</h1>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/dashboard">Accueil</a></li>
+                        <li class="breadcrumb-item"><a href="<?= $baseUrl ?>/dashboard">Accueil</a></li>
                         <li class="breadcrumb-item active">Besoins restants</li>
                     </ol>
                 </nav>
@@ -137,7 +139,7 @@
                                         <td><?= $b['quantite_restante'] ?></td>
                                         <td><?= number_format($b['quantite_restante'] * $b['prix_unitaire'], 0, ',', ' ') ?> Ar</td>
                                         <td>
-                                            <a href="/achat/<?= $b['id'] ?>" class="btn btn-sm btn-accent">
+                                            <a href="<?= $baseUrl ?>/achat/<?= $b['id'] ?>" class="btn btn-sm btn-accent">
                                                 <i class="bi bi-cart-plus me-1"></i>Acheter
                                             </a>
                                         </td>
@@ -162,7 +164,7 @@
 
     </div>
 
-    <script src="/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/app.js"></script>
+    <script src="<?= $baseUrl ?>/js/bootstrap.bundle.min.js"></script>
+    <script src="<?= $baseUrl ?>/js/app.js"></script>
 </body>
 </html>

@@ -1,12 +1,14 @@
+<?php $baseUrl = rtrim(BASE_URL, '/'); ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BNGRC – Types de besoins</title>
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="/css/style.css" rel="stylesheet">
+    <link href="<?= $baseUrl ?>/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?= $baseUrl ?>/css/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="<?= $baseUrl ?>/css/style.css" rel="stylesheet">
 </head>
 <body>
 
@@ -21,37 +23,37 @@
         </div>
         <ul class="nav flex-column mt-2">
             <li class="nav-item">
-                <a class="nav-link" href="/dashboard">
+                <a class="nav-link" href="<?= $baseUrl ?>/dashboard">
                     <i class="bi bi-grid-1x2"></i> Dashboard
                 </a>
             </li>
             <!-- <li class="nav-item">
-                <a class="nav-link" href="/regions">
+                <a class="nav-link" href="<?= $baseUrl ?>/regions">
                     <i class="bi bi-map"></i> Régions
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/villes">
+                <a class="nav-link" href="<?= $baseUrl ?>/villes">
                     <i class="bi bi-building"></i> Villes
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="/types">
+                <a class="nav-link active" href="<?= $baseUrl ?>/types">
                     <i class="bi bi-tags"></i> Types de besoins
                 </a>
             </li> -->
             <li class="nav-item">
-                <a class="nav-link" href="/besoins">
+                <a class="nav-link" href="<?= $baseUrl ?>/besoins">
                     <i class="bi bi-clipboard-data"></i> Besoins
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/crud/dons">
+                <a class="nav-link" href="<?= $baseUrl ?>/crud/dons">
                     <i class="bi bi-gift"></i> Dons
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/attributions">
+                <a class="nav-link" href="<?= $baseUrl ?>/attributions">
                     <i class="bi bi-arrow-left-right"></i> Attributions
                 </a>
             </li>
@@ -91,7 +93,7 @@
                 <h1>Types de besoins</h1>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/dashboard">Accueil</a></li>
+                        <li class="breadcrumb-item"><a href="<?= $baseUrl ?>/dashboard">Accueil</a></li>
                         <li class="breadcrumb-item active">Types de besoins</li>
                     </ol>
                 </nav>
@@ -121,10 +123,10 @@
                                         <td><?= $i + 1 ?></td>
                                         <td><?= htmlspecialchars($type['nom']) ?></td>
                                         <td>
-                                            <a href="/types?edit=<?= $type['id'] ?>" class="btn btn-sm btn-outline-secondary btn-action me-1">
+                                            <a href="<?= $baseUrl ?>/types?edit=<?= $type['id'] ?>" class="btn btn-sm btn-outline-secondary btn-action me-1">
                                                 <i class="bi bi-pencil"></i>
                                             </a>
-                                            <form method="POST" action="/types/<?= $type['id'] ?>/delete" style="display:inline;" onsubmit="return confirm('Supprimer ce type ?');">
+                                            <form method="POST" action="<?= $baseUrl ?>/types/<?= $type['id'] ?>/delete" style="display:inline;" onsubmit="return confirm('Supprimer ce type ?');">
                                                 <button type="submit" class="btn btn-sm btn-outline-danger btn-action">
                                                     <i class="bi bi-trash"></i>
                                                 </button>
@@ -159,7 +161,7 @@
                     <h5 class="modal-title" id="modalTypeLabel">Ajouter un type de besoin</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
                 </div>
-                <form method="POST" action="/types/create">
+                <form method="POST" action="<?= $baseUrl ?>/types/create">
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="nomType" class="form-label">Nom du type</label>
@@ -186,9 +188,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Modifier le type</h5>
-                    <a href="/types" class="btn-close" aria-label="Fermer"></a>
+                    <a href="<?= $baseUrl ?>/types" class="btn-close" aria-label="Fermer"></a>
                 </div>
-                <form method="POST" action="/types/<?= $editType['id'] ?>/update">
+                <form method="POST" action="<?= $baseUrl ?>/types/<?= $editType['id'] ?>/update">
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="nomTypeEdit" class="form-label">Nom du type</label>
@@ -196,7 +198,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <a href="/types" class="btn btn-secondary btn-sm">Annuler</a>
+                        <a href="<?= $baseUrl ?>/types" class="btn btn-secondary btn-sm">Annuler</a>
                         <button type="submit" class="btn btn-accent btn-sm">Modifier</button>
                     </div>
                 </form>
@@ -207,7 +209,7 @@
     <?php endif; ?>
     <?php endif; ?>
 
-    <script src="/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/app.js"></script>
+    <script src="<?= $baseUrl ?>/js/bootstrap.bundle.min.js"></script>
+    <script src="<?= $baseUrl ?>/js/app.js"></script>
 </body>
 </html>

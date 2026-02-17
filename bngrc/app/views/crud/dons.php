@@ -1,12 +1,14 @@
+<?php $baseUrl = rtrim(BASE_URL, '/'); ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BNGRC – Dons</title>
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="/css/style.css" rel="stylesheet">
+    <link href="<?= $baseUrl ?>/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?= $baseUrl ?>/css/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="<?= $baseUrl ?>/css/style.css" rel="stylesheet">
 </head>
 <body>
 
@@ -21,42 +23,42 @@
         </div>
         <ul class="nav flex-column mt-2">
             <li class="nav-item">
-                <a class="nav-link" href="/dashboard">
+                <a class="nav-link" href="<?= $baseUrl ?>/dashboard">
                     <i class="bi bi-grid-1x2"></i> Dashboard
                 </a>
             </li>
             <!-- <li class="nav-item">
-                <a class="nav-link" href="/regions">
+                <a class="nav-link" href="<?= $baseUrl ?>/regions">
                     <i class="bi bi-map"></i> Régions
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/villes">
+                <a class="nav-link" href="<?= $baseUrl ?>/villes">
                     <i class="bi bi-building"></i> Villes
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/types">
+                <a class="nav-link" href="<?= $baseUrl ?>/types">
                     <i class="bi bi-tags"></i> Types de besoins
                 </a>
             </li> -->
             <li class="nav-item">
-                <a class="nav-link" href="/besoins">
+                <a class="nav-link" href="<?= $baseUrl ?>/besoins">
                     <i class="bi bi-clipboard-data"></i> Besoins
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="/crud/dons">
+                <a class="nav-link active" href="<?= $baseUrl ?>/crud/dons">
                     <i class="bi bi-gift"></i> Dons
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/attributions">
+                <a class="nav-link" href="<?= $baseUrl ?>/attributions">
                     <i class="bi bi-arrow-left-right"></i> Attributions
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/besoins-restants">
+                <a class="nav-link" href="<?= $baseUrl ?>/besoins-restants">
                     <i class="bi bi-cart"></i> Achats
                 </a>
             </li>
@@ -96,7 +98,7 @@
                 <h1>Dons</h1>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/dashboard">Accueil</a></li>
+                        <li class="breadcrumb-item"><a href="<?= $baseUrl ?>/dashboard">Accueil</a></li>
                         <li class="breadcrumb-item active">Dons</li>
                     </ol>
                 </nav>
@@ -140,12 +142,12 @@
                                         </td>
                                         <td><?= date('Y-m-d', strtotime($don['date_saisie'])) ?></td>
                                         <td>
-                                            <a href="/crud/dons?edit=<?= htmlspecialchars($don['id']) ?>" 
+                                            <a href="<?= $baseUrl ?>/crud/dons?edit=<?= htmlspecialchars($don['id']) ?>" 
                                                class="btn btn-sm btn-outline-secondary btn-action me-1">
                                                 <i class="bi bi-pencil"></i>
                                             </a>
                                             <form method="POST" 
-                                                  action="/dons/<?= htmlspecialchars($don['id']) ?>/delete" 
+                                                  action="<?= $baseUrl ?>/dons/<?= htmlspecialchars($don['id']) ?>/delete" 
                                                   style="display: inline;"
                                                   onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce don ?');">
                                                 <button type="submit" class="btn btn-sm btn-outline-danger btn-action">
@@ -239,7 +241,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/app.js"></script>
+    <script src="<?= $baseUrl ?>/js/app.js"></script>
     <script>
         // Auto-show modal if we're editing a don
         <?php if (isset($editDon) && $editDon): ?>

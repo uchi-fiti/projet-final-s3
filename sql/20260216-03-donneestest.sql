@@ -1,4 +1,4 @@
-
+insert into bngrc_types_besoins (nom) values ("Nature"), ("Materiaux"), ("Argent");
 -- ======================
 -- bngrc_regions
 -- ======================

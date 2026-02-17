@@ -1,17 +1,19 @@
+<?php $baseUrl = rtrim(BASE_URL, '/'); ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestion des Besoins - BNGRC</title>
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/bootstrap-icons.css" rel="stylesheet">
+    <link href="<?= $baseUrl ?>/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?= $baseUrl ?>/css/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand" href="<?= $baseUrl ?>/">
                 <i class="bi bi-house-heart"></i> BNGRC - Gestion des Dons
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -20,16 +22,16 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Tableau de bord</a>
+                        <a class="nav-link" href="<?= $baseUrl ?>/">Tableau de bord</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="/besoins">Besoins</a>
+                        <a class="nav-link active" href="<?= $baseUrl ?>/besoins">Besoins</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/dons">Dons</a>
+                        <a class="nav-link" href="<?= $baseUrl ?>/dons">Dons</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/villes">Villes</a>
+                        <a class="nav-link" href="<?= $baseUrl ?>/villes">Villes</a>
                     </li>
                 </ul>
             </div>
@@ -67,7 +69,7 @@
                 <!-- En-tête -->
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h1><i class="bi bi-clipboard-check"></i> Gestion des Besoins</h1>
-                    <a href="/besoins/create" class="btn btn-primary">
+                    <a href="<?= $baseUrl ?>/besoins/create" class="btn btn-primary">
                         <i class="bi bi-plus-circle"></i> Nouveau Besoin
                     </a>
                 </div>
@@ -121,7 +123,7 @@
                                                 <td><?= date('d/m/Y', strtotime($besoin['created_at'])) ?></td>
                                                 <td class="text-center">
                                                     <div class="btn-group" role="group">
-                                                        <a href="/besoins/edit/<?= $besoin['id'] ?>" 
+                                                        <a href="<?= $baseUrl ?>/besoins/edit/<?= $besoin['id'] ?>" 
                                                            class="btn btn-sm btn-warning" 
                                                            title="Modifier">
                                                             <i class="bi bi-pencil"></i>
@@ -189,7 +191,7 @@
     <script>
         function confirmDelete(id) {
             const form = document.getElementById('deleteForm');
-            form.action = '/besoins/delete/' + id;
+            form.action = '<?= $baseUrl ?>/besoins/delete/' + id;
             const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
             modal.show();
         }

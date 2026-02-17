@@ -1,12 +1,14 @@
+<?php $baseUrl = rtrim(BASE_URL, '/'); ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BNGRC – Dashboard</title>
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="/css/style.css" rel="stylesheet">
+    <link href="<?= $baseUrl ?>/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?= $baseUrl ?>/css/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="<?= $baseUrl ?>/css/style.css" rel="stylesheet">
 </head>
 <body>
 
@@ -21,42 +23,42 @@
         </div>
         <ul class="nav flex-column mt-2">
             <li class="nav-item">
-                <a class="nav-link active" href="/dashboard">
+                <a class="nav-link active" href="<?= $baseUrl ?>/dashboard">
                     <i class="bi bi-grid-1x2"></i> Dashboard
                 </a>
             </li>
             <!-- <li class="nav-item">
-                <a class="nav-link" href="/regions">
+                <a class="nav-link" href="<?= $baseUrl ?>/regions">
                     <i class="bi bi-map"></i> Régions
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/villes">
+                <a class="nav-link" href="<?= $baseUrl ?>/villes">
                     <i class="bi bi-building"></i> Villes
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/types">
+                <a class="nav-link" href="<?= $baseUrl ?>/types">
                     <i class="bi bi-tags"></i> Types de besoins
                 </a>
             </li> -->
             <li class="nav-item">
-                <a class="nav-link" href="/besoins">
+                <a class="nav-link" href="<?= $baseUrl ?>/besoins">
                     <i class="bi bi-clipboard-data"></i> Besoins
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/crud/dons">
+                <a class="nav-link" href="<?= $baseUrl ?>/crud/dons">
                     <i class="bi bi-gift"></i> Dons
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/attributions">
+                <a class="nav-link" href="<?= $baseUrl ?>/attributions">
                     <i class="bi bi-arrow-left-right"></i> Attributions
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/besoins-restants">
+                <a class="nav-link" href="<?= $baseUrl ?>/besoins-restants">
                     <i class="bi bi-cart"></i> Achats
                 </a>
             </li>
@@ -88,7 +90,7 @@
                 <h1>Dashboard</h1>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/dashboard">Accueil</a></li>
+                        <li class="breadcrumb-item"><a href="<?= $baseUrl ?>/dashboard">Accueil</a></li>
                         <li class="breadcrumb-item active">Dashboard</li>
                     </ol>
                 </nav>
@@ -171,7 +173,7 @@
 
             <!-- Action Buttons -->
             <div class="d-flex flex-wrap gap-2 mb-4">
-                <a href="/besoins-restants" class="btn btn-outline-primary">
+                <a href="<?= $baseUrl ?>/besoins-restants" class="btn btn-outline-primary">
                     <i class="bi bi-cart-plus me-1"></i>Voir les besoins restants / Achats
                 </a>
             </div>
@@ -238,7 +240,7 @@
 
     </div>
 
-    <script src="/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/app.js"></script>
+    <script src="<?= $baseUrl ?>/js/bootstrap.bundle.min.js"></script>
+    <script src="<?= $baseUrl ?>/js/app.js"></script>
 </body>
 </html>
