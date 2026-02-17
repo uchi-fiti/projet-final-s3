@@ -10,6 +10,7 @@ use app\controllers\TypeController;
 use app\controllers\BesoinCrudController;
 use app\controllers\AttributionController;
 use app\controllers\AchatController;
+use app\controllers\RecapController;
 use app\middlewares\SecurityHeadersMiddleware;
 use flight\Engine;
 use flight\net\Router;
@@ -83,3 +84,7 @@ $router->get('/besoins-restants', [AchatController::class, 'besoinsRestants']);
 $router->get('/achat/@id:[0-9]+', [AchatController::class, 'showAchatForm']);
 $router->post('/achat/simulate', [AchatController::class, 'simulate']);
 $router->post('/achat/validate', [AchatController::class, 'validate']);
+
+// Récapitulation
+$router->get('/recap', [RecapController::class, 'index']);
+$router->get('/api/recap', [RecapController::class, 'apiJson']);

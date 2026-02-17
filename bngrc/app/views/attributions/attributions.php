@@ -63,6 +63,11 @@ echo $baseUrl; ?>
                     <i class="bi bi-cart"></i> Achats
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<?= $baseUrl ?>/recap">
+                    <i class="bi bi-calculator"></i> Récapitulation
+                </a>
+            </li>
         </ul>
     </nav>
 
